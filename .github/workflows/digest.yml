@@ -14,6 +14,13 @@ on:
       - "04_Project/site/**"
       - ".github/workflows/digest.yml"
   workflow_dispatch:
+    inputs:
+      slot:
+        description: "档位：12 或 18（留空则按当前北京时间自动判断）"
+        default: ""
+      dry_run:
+        description: "只测试抓取、不写入任何内容（输入 1 开启）"
+        default: ""
 
 permissions:
   contents: write
@@ -33,21 +40,33 @@ jobs:
         with:
           python-version: "3.12"
 
-      # push 触发 = AI 层刚提交了摘要，只需重算套用，不重新抓取；
-      # schedule 触发 = 正常两更，按当前北京时间判断是 12 点档还是 18 点档。
+      # push 触发 = AI 层刚提交了摘要，只需重算套用，不重新抓取
+      # schedule / 手动触发 = 正常两更，按档位抓取
       - name: 生成当期
         run: |
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            echo "→ 非定时触发，重算套用摘要"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "→ push 触发，重算套用摘要"
             python 04_Project/digest/run.py --rerender
             exit 0
           fi
-          HOUR=$(TZ=Asia/Shanghai date +%H)
-          if [ "$HOUR" -ge 15 ]; then SLOT=18; else SLOT=12; fi
-          echo "→ 北京时间 ${HOUR} 点，档位 ${SLOT}"
-          python 04_Project/digest/run.py --slot $SLOT
+
+          SLOT="${{ github.event.inputs.slot }}"
+          if [ -z "$SLOT" ]; then
+            HOUR=$(TZ=Asia/Shanghai date +%H)
+            if [ "$HOUR" -ge 15 ]; then SLOT=18; else SLOT=12; fi
+          fi
+          echo "→ 档位 ${SLOT}"
+
+          if [ "${{ github.event.inputs.dry_run }}" = "1" ]; then
+            echo "→ 试跑模式，不写入"
+            python 04_Project/digest/run.py --slot "$SLOT" --dry-run
+            exit 0
+          fi
+
+          python 04_Project/digest/run.py --slot "$SLOT"
 
       - name: 发布到 gh-pages
+        if: github.event.inputs.dry_run != '1'
         run: |
           cd 03_OutputFiles/deliverables/site
           git init -q -b gh-pages
