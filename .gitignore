@@ -21,3 +21,6 @@ desktop.ini
 # 本地临时
 *.log
 tmp/
+
+# Agent 的工作数据（自动化在工程目录里留下的分析记录），不属于仓库内容
+.workbuddy/
