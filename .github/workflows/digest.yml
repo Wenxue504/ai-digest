@@ -1,0 +1,59 @@
+name: digest
+
+# 云端定时：北京时间 12:00 与 18:00（UTC 04:00 / 10:00）。
+# 跑在 GitHub 的机器上，跟用户电脑开不开机无关——这是本工程的核心约束（ADR 0002）。
+on:
+  schedule:
+    - cron: "0 4 * * *"
+    - cron: "0 10 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "04_Project/digest/**"
+      - "04_Project/content/**"
+      - "04_Project/site/**"
+      - ".github/workflows/digest.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# 同一时间只跑一个，避免两次抓取互相覆盖
+concurrency:
+  group: digest
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # push 触发 = AI 层刚提交了摘要，只需重算套用，不重新抓取；
+      # schedule 触发 = 正常两更，按当前北京时间判断是 12 点档还是 18 点档。
+      - name: 生成当期
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "→ 非定时触发，重算套用摘要"
+            python 04_Project/digest/run.py --rerender
+            exit 0
+          fi
+          HOUR=$(TZ=Asia/Shanghai date +%H)
+          if [ "$HOUR" -ge 15 ]; then SLOT=18; else SLOT=12; fi
+          echo "→ 北京时间 ${HOUR} 点，档位 ${SLOT}"
+          python 04_Project/digest/run.py --slot $SLOT
+
+      - name: 发布到 gh-pages
+        run: |
+          cd 03_OutputFiles/deliverables/site
+          git init -q -b gh-pages
+          git add -A
+          git -c user.name="ai-digest" -c user.email="ai-digest@users.noreply.github.com" \
+              commit -qm "deploy: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M')"
+          git push -q --force \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            gh-pages
