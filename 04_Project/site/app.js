@@ -8,6 +8,7 @@
   var app = document.getElementById('app');
   var nav = document.getElementById('sessions');
   var MAX_CHIPS = 16;
+  var currentId = '';
 
   var WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
   var SLOT_LABEL = { 12: '午间', 18: '晚间' };
@@ -143,14 +144,26 @@
     return null;
   }
 
+  /* file:// 下 history.replaceState 会抛 SecurityError，
+     一抛就挡住后面所有渲染（页面卡在「正在载入」）。
+     本地双击打开是这个站明确支持的用法，所以这里必须降级到改 hash。 */
+  function setHash(id) {
+    var target = '#' + id;
+    if (location.hash === target) return;
+    try {
+      history.replaceState(null, '', target);
+    } catch (e) {
+      try { location.hash = target; } catch (e2) { /* 连 hash 都不让改就算了 */ }
+    }
+  }
+
   function show(id) {
     var entry = findEntry(id);
     if (!entry) return false;
 
+    currentId = id;
     renderChips(id);
-    if (location.hash !== '#' + id) {
-      history.replaceState(null, '', '#' + id);
-    }
+    setHash(id);
 
     if (DATA.issues[id]) {
       renderIssue(DATA.issues[id], entry);
@@ -181,8 +194,9 @@
     if (!link) return;
     var li = link.closest('.item');
     if (!li) return;
-    var issueId = (location.hash || '').slice(1);
-    markRead(issueId, li.dataset.id);
+    // 用渲染时记下的期次 id，不依赖 location.hash——
+    // file:// 下 hash 可能改不动
+    markRead(currentId, li.dataset.id);
     li.classList.add('read');
   });
 
