@@ -11,6 +11,7 @@ import argparse
 import json
 import sys
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import wait as futures_wait
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -26,21 +27,38 @@ CST = timezone(timedelta(hours=8))
 LIMIT_FULL = 15
 LIMIT_INCREMENTAL = 8
 POOL_FOR_AI = 50  # 候选池上限：再多就是在烧额度（见 ADR 0003）
+FETCH_DEADLINE = 60  # 整轮抓取墙钟上限（秒）
 
 
 def collect(now: datetime):
-    """并发抓全部源，返回 (标准化条目, 每个源的成败记录)。"""
+    """并发抓全部源，返回 (标准化条目, 每个源的成败记录)。
+
+    用 wait(timeout=) 而不是 map：map 会一直等最慢的那个，
+    任何一个源在云端挂起（实测出现过）都会把整轮拖死。
+    """
+    executor = ThreadPoolExecutor(max_workers=8)
+    futures = {executor.submit(fetch_source, source): source for source in SOURCES}
+    done, pending = futures_wait(futures, timeout=FETCH_DEADLINE)
+
     results = []
+    for future in done:
+        source = futures[future]
+        try:
+            items, error = future.result()
+        except Exception as exc:  # 理论上不会到这里，兜一层
+            items, error = None, f"{type(exc).__name__}: {exc}"
+        status = "OK" if items else "FAIL"
+        log(f"  {status:4s} {source['name']:<12s} {len(items or [])} 条"
+            + (f"  ({error})" if error else ""))
+        results.append((source, items, error))
 
-    def _one(source):
-        items, error = fetch_source(source)
-        return source, items, error
+    for future in pending:
+        source = futures[future]
+        log(f"  SLOW {source['name']:<12s} 超过 {FETCH_DEADLINE}s 未返回，跳过")
+        results.append((source, None, "timeout"))
+        future.cancel()
 
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        for source, items, error in pool.map(_one, SOURCES):
-            status = "OK" if items else "FAIL"
-            log(f"  {status:4s} {source['name']:<12s} {len(items or [])} 条" + (f"  ({error})" if error else ""))
-            results.append((source, items, error))
+    executor.shutdown(wait=False, cancel_futures=True)
 
     normalized = []
     for source, items, _ in results:
