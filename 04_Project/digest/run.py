@@ -3,16 +3,17 @@
 一天只有一期（12:00）。18:00 的增量档已于 2026-11-01 移除，
 理由：欧美白天新闻在中午那期已经落地，晚间增量太薄，不值得再跑一次。
 
-**候选池只由云端产生，并随 content/pools/ 进 git。** 本机（AI 层）只读那份池、
-只写 summaries/，不再自己抓一遍——否则同一期有两个生产者，内容不可复现
-（见 01_Requirements/review_2026-11-01.md §7）。
+**候选池只由云端产生，并随 content/pools/ 进 git。** 本机（AI 层）读同一份池、
+用 `--refresh` 重新装配——因为它要从 50 条候选里挑 15 条，选条权必须在 AI 手里；
+`--rerender` 只盖摘要不重选，不能给 AI 用。两边读同一份池，内容才可复现。
 
 用法：
     python 04_Project/digest/run.py                # 抓取并生成今天这一期（云端用）
     python 04_Project/digest/run.py --dry-run      # 只抓、不写任何文件，看候选池
-    python 04_Project/digest/run.py --refresh      # 读已落盘候选池 + 摘要重建（AI 层用）
-    python 04_Project/digest/run.py --rerender     # 只把摘要盖回已有期次
+    python 04_Project/digest/run.py --refresh      # 读已落盘候选池 + 摘要重新装配（AI 层用）
+    python 04_Project/digest/run.py --rerender     # 只把摘要盖回已有期次，不重选
     python 04_Project/digest/run.py --export-md    # 额外导出 markdown 报表
+    python 04_Project/digest/run.py --force-pool   # 当天已有候选池时强制重抓覆盖（慎用）
 """
 
 import argparse
@@ -121,6 +122,9 @@ def write_pool(items, date_str: str, now: datetime, dropped: int) -> Path:
                 "published": item["published"].isoformat(),
                 "category_guess": item.get("category", ""),
                 "excerpt": item["summary"][:160],
+                # 有些源（InfoQ）只给标题没有正文。显式标出来，让 AI 层知道
+                # 这条只能凭标题写摘要，不要凭想象补事实。
+                "no_body": not item["summary"],
                 "score": item.get("score", 0),
                 "url": item["url"],
             }
@@ -134,7 +138,7 @@ def write_pool(items, date_str: str, now: datetime, dropped: int) -> Path:
 
 
 def load_pool(path: Path):
-    """读已落盘的候选池，返回 (条目, 淘汰数)。"""
+    """读已落盘的候选池，返回 (条目, 淘汰数, 抓取时刻)。"""
     payload = json.loads(path.read_text(encoding="utf-8"))
     items = [
         {
@@ -151,7 +155,12 @@ def load_pool(path: Path):
         }
         for candidate in payload.get("candidates", [])
     ]
-    return items, payload.get("dropped", 0)
+    captured_at = payload.get("generated_at")
+    return (
+        items,
+        payload.get("dropped", 0),
+        datetime.fromisoformat(captured_at) if captured_at else None,
+    )
 
 
 def main() -> int:
@@ -166,6 +175,8 @@ def main() -> int:
                         help="不抓取，把摘要盖回全部已有期次并重建站点")
     parser.add_argument("--export-md", action="store_true",
                         help="同时导出一份 markdown 报表到 03_OutputFiles/reports/")
+    parser.add_argument("--force-pool", action="store_true",
+                        help="当天已有候选池时仍然重抓覆盖（会让已写好的摘要失效）")
     args = parser.parse_args()
 
     if args.rerender:
@@ -184,6 +195,9 @@ def main() -> int:
 
     now = datetime.now(CST)
     date_str = args.date or now.strftime("%Y-%m-%d")
+    # 期次的 generated_at 表示「这期内容何时抓取」，取自候选池而不是本次装配时刻。
+    # 否则同一份池连跑两次 --refresh，文件哈希都不一样，谈不上可复现。
+    captured_at = now
 
     if args.refresh:
         path = pool_path(date_str)
@@ -191,7 +205,8 @@ def main() -> int:
             log(f"找不到候选池 {path}")
             log("候选池由云端 12:00 生成并提交；先 git pull 一次再重试。")
             return 1
-        pool, dropped = load_pool(path)
+        pool, dropped, pool_time = load_pool(path)
+        captured_at = pool_time or now
         log(f"[refresh] 用 {path.name} 重建 {date_str}，候选 {len(pool)} 条")
     else:
         log(f"[{now:%Y-%m-%d %H:%M}] 开始抓取 {date_str}")
@@ -211,8 +226,17 @@ def main() -> int:
             log("  （--dry-run：未写入任何文件）")
             return 0
 
-        path = write_pool(pool, date_str, now, dropped)
-        log(f"  候选池 → {path}")
+        # 池文件一旦落盘就是这一天的**唯一事实**：AI 摘要的 id 全是照它写的。
+        # 重跑一次就覆盖，等于把当天摘要全作废（实测会触发一串「id 不在池里」的告警）。
+        # 所以默认沿用；真要重抓得显式 --force-pool。
+        path = pool_path(date_str)
+        if path.exists() and not args.force_pool:
+            log(f"  候选池已存在（{path.name}），沿用不覆盖。要重抓请加 --force-pool")
+            pool, dropped, pool_time = load_pool(path)
+            captured_at = pool_time or now
+        else:
+            path = write_pool(pool, date_str, now, dropped)
+            log(f"  候选池 → {path}")
 
         if args.save_raw:
             RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -224,7 +248,7 @@ def main() -> int:
                 ), encoding="utf-8",
             )
 
-    issue = build.build_issue(pool, date_str, now, limit=LIMIT, dropped=dropped)
+    issue = build.build_issue(pool, date_str, captured_at, limit=LIMIT, dropped=dropped)
     build.save_issue(issue)
     summary = build.render_site()
 

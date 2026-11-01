@@ -2,9 +2,10 @@
 
 规则与 docs/ranking.md 一一对应。改这里必须同一次提交里改那份文档。
 
-⚠️ 匹配规则：ASCII 词必须按「词边界」匹配。
-   早期版本用 `"ai" in text`，结果 `explained` / `available` / `said` 全部命中，
-   一堆非 AI 的 HN 帖子涌进候选池（Show HN: 8-bit computer 排到第一名）。
+两道闸门，别混：
+1. **词边界匹配**——早期用 `"ai" in text`，`explained` / `available` / `said` 全部命中。
+2. **泛科技源按标题强判**——光修词边界还不够，「Show HN: 8-bit computer」正文里提了
+   一句 Claude 就能过闸，还靠「模型」关键词拿到 +1.2。标题才代表这条新闻在讲什么。
 """
 
 import hashlib
@@ -94,10 +95,14 @@ def item_id(url: str) -> str:
 
 
 def is_ai_related(item) -> bool:
+    """泛科技源**按标题强判**：标题里没有 AI 词就不算 AI 新闻。
+
+    早期版本只看摘要里的顺带提及，结果「Show HN: 8-bit computer」因为正文提了一句
+    Claude 就过关，还能靠「模型」关键词拿到 +1.2，稳进候选池。标题才是这条新闻在讲什么。
+    """
     if item["source_id"] not in GENERIC_SOURCES:
         return True
-    haystack = (item["title"] + " " + item["summary"]).lower()
-    return hits(haystack, AI_TERMS)
+    return hits(item["title"].lower(), AI_TERMS)
 
 
 def classify(item) -> str:
@@ -131,17 +136,16 @@ def score(item, now) -> float:
         if hits(haystack, keywords):
             value += bonus
 
-    # 泛科技源：标题里没有 AI 词、只在正文顺带提一句的，不算 AI 新闻。
-    # 否则「Show HN: 8-bit computer」这种正文提到 Claude 的帖子会顶到第一。
-    if item["source_id"] in GENERIC_SOURCES and not hits(item["title"].lower(), AI_TERMS):
-        value -= 1.5
-
     if hits(haystack, NEGATIVE):
         value -= 3
-    # 只罚「拿到了摘要但很短」；完全不提供摘要的源不该被罚——
-    # InfoQ 只给一句「点击查看原文」，按长度扣分会把整个源挤到后面。
-    if item["summary"] and len(item["summary"]) < 20:
-        value -= 1
+
+    # 证据强度：只罚「有摘要但很短」，空摘要罚一点点。
+    # 早先对空摘要免罚，结果是没有任何正文的条目纯靠标题关键词就能排上来
+    # （InfoQ 的「Agent Sandbox…」以 3.7 分进过前 15），AI 只能凭标题编两句。
+    if not item["summary"]:
+        value -= 0.3
+    elif len(item["summary"]) < 20:
+        value -= 1.0
     points = hn_points(item)
     if points >= 0 and points < 100:
         value -= 2

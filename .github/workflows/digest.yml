@@ -40,6 +40,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      # 纯函数测试，10 毫秒级。放进 CI 是为了它不会在三周后烂掉。
+      - name: 跑单元测试
+        run: python -m unittest discover -s 04_Project/tests -v
+
       # push 触发 = AI 层刚提交了摘要，只需重算套用，不重新抓取
       # schedule / 手动触发 = 正常抓取
       - name: 生成当期

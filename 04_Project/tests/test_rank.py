@@ -51,6 +51,15 @@ class TestAiFilter(unittest.TestCase):
         item = make("Engineer explained why the server is available", source_id="hn")
         self.assertFalse(rank.is_ai_related(item))
 
+    def test_summary_mention_is_not_enough(self):
+        # 回归：Show HN 那种正文提一句 Claude 的帖子，不能靠摘要过闸
+        item = make(
+            "Show HN: BBRouter – 8-bit computer on breadboards",
+            source_id="hn",
+            summary="connect to your AI with MCP and let Claude & co build it",
+        )
+        self.assertFalse(rank.is_ai_related(item))
+
     def test_generic_source_ai_with_word_boundary(self):
         item = make("Anthropic ships a new model", source_id="hn")
         self.assertTrue(rank.is_ai_related(item))
