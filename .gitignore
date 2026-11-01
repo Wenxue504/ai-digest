@@ -1,9 +1,17 @@
-# 产物与数据不入库（总规则 §4）
-03_OutputFiles/
-05_Datas/
+# 产物与数据不入库（总规则 §4），但保留六区目录骨架：
+# 整目录忽略会让克隆下来只剩四个区，空目录也没有 .gitkeep 可放。
+/03_OutputFiles/**
+!/03_OutputFiles/**/
+!/03_OutputFiles/**/.gitkeep
+
+/05_Datas/**
+!/05_Datas/**/
+!/05_Datas/**/.gitkeep
 
 # 外部技术档案不入库
-00_InputFiles/reference/
+/00_InputFiles/reference/**
+!/00_InputFiles/reference/**/
+!/00_InputFiles/reference/**/.gitkeep
 
 # Python
 __pycache__/

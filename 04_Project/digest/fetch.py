@@ -15,6 +15,7 @@ from email.utils import parsedate_to_datetime
 
 CST = timezone(timedelta(hours=8))
 TIMEOUT = 20
+MAX_FEED_BYTES = 8 * 1024 * 1024  # 单个 feed 上限，防超大响应与 gzip 炸弹
 UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -23,18 +24,28 @@ UA = (
 _TAG_RE = re.compile(r"<[^>]+>")
 _WS_RE = re.compile(r"\s+")
 
+# 有些源不给摘要，只放一句「点击查看原文」。这类占位文本要当成空，
+# 否则会被排序规则当成「信息量不足」扣分，系统性压低整个源。
+_BOILERPLATE = re.compile(
+    r"^(点击?查看原文|查看全文|阅读原文|详情请见原文|read more|continue reading|"
+    r"read the full (story|article)|\.{3,}|…+)\s*[>»]*$",
+    re.IGNORECASE,
+)
+
 
 def log(msg: str) -> None:
     print(msg, file=sys.stderr)
 
 
 def clean_text(value: str, limit: int = 0) -> str:
-    """去标签、解实体、压空白。limit>0 时截断并补省略号。"""
+    """去标签、解实体、压空白。占位文本归零。limit>0 时截断。"""
     if not value:
         return ""
     text = _TAG_RE.sub(" ", value)
     text = html.unescape(text)
     text = _WS_RE.sub(" ", text).strip()
+    if _BOILERPLATE.match(text):
+        return ""
     if limit and len(text) > limit:
         text = text[:limit].rstrip() + "…"
     return text
@@ -49,7 +60,9 @@ def fetch_bytes(url: str) -> bytes:
         url, headers={"User-Agent": UA, "Accept-Encoding": "identity"}
     )
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-        raw = resp.read()
+        raw = resp.read(MAX_FEED_BYTES + 1)
+        if len(raw) > MAX_FEED_BYTES:
+            raise ValueError(f"响应超过 {MAX_FEED_BYTES // 1024 // 1024} MB，放弃")
         if resp.headers.get("Content-Encoding") == "gzip":
             raw = gzip.decompress(raw)
         return raw
@@ -87,46 +100,38 @@ def parse_feed(raw: bytes):
         if _localname(node.tag) not in ("item", "entry"):
             continue
 
-        fields = {}
-        link = ""
+        title = link = desc = summary = content = date_text = ""
         for child in node:
             name = _localname(child.tag)
+            text = "".join(child.itertext())
             if name == "link":
-                # Atom 用 href 属性，RSS 用文本
                 href = child.get("href")
-                rel = child.get("rel", "alternate")
-                if href and rel == "alternate" and not link:
+                if href and child.get("rel", "alternate") == "alternate" and not link:
                     link = href
-                elif (child.text or "").strip() and not link:
-                    link = (child.text or "").strip()
-            elif name in ("title", "description", "summary", "content",
-                          "pubdate", "published", "updated"):
-                # content 常含完整正文，只在没有 summary 时才用
-                if name in fields and name == "content":
-                    continue
-                fields.setdefault(name, "" if name == "content" else "".join(child.itertext()))
+                elif text.strip() and not link:
+                    link = text.strip()
+            elif name == "title":
+                title = text
+            elif name == "description":
+                desc = text
+            elif name == "summary":
+                summary = text
+            elif name in ("content", "encoded"):
+                # 同时覆盖 Atom 的 <content> 与 RSS 的 <content:encoded>
+                content = text
+            elif name in ("pubdate", "published", "updated") and not date_text:
+                date_text = text
 
-        title = clean_text(fields.get("title", ""), 200)
+        title = clean_text(title, 200)
         if not title or not link:
             continue
 
-        excerpt = (
-            fields.get("description")
-            or fields.get("summary")
-            or fields.get("content")
-            or ""
-        )
         out.append(
             {
                 "title": title,
                 "link": link,
-                "summary": clean_text(excerpt, 400),
-                "published": parse_date(
-                    fields.get("pubdate")
-                    or fields.get("published")
-                    or fields.get("updated")
-                    or ""
-                ),
+                "summary": clean_text(desc or summary or content, 400),
+                "published": parse_date(date_text),
             }
         )
     return out

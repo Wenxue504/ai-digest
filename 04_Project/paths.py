@@ -23,6 +23,7 @@ PROJECT = ROOT / "04_Project"
 CONTENT = PROJECT / "content"
 ISSUES_DIR = CONTENT / "issues"
 SUMMARIES_DIR = CONTENT / "summaries"
+POOLS_DIR = CONTENT / "pools"      # 候选池进 git：云与本机必须用同一份，否则内容不可复现
 SITE_SRC = PROJECT / "site"
 DOCS_DIR = PROJECT / "docs"
 

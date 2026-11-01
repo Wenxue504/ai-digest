@@ -32,8 +32,9 @@ CATEGORY_RULES = [
               "funding", "fundraise", "acquire", "acquisition", "valuation",
               "series a", "series b", "raises")),
     ("政策", ("监管", "法案", "合规", "诉讼", "禁令", "版权", "反垄断", "备案",
+              "法院", "裁定", "判决", "裁决", "侵权", "处罚", "罚款",
               "regulation", "regulator", "lawsuit", "ban", "policy", "antitrust",
-              "copyright", "court")),
+              "copyright", "court", "ruling", "fine")),
     ("硬件", ("芯片", "算力", "数据中心", "晶圆", "台积电", "英伟达",
               "chip", "chips", "datacenter", "data center", "semiconductor",
               "nvidia", "tsmc", "wafer")),
@@ -137,7 +138,9 @@ def score(item, now) -> float:
 
     if hits(haystack, NEGATIVE):
         value -= 3
-    if len(item["summary"]) < 20:
+    # 只罚「拿到了摘要但很短」；完全不提供摘要的源不该被罚——
+    # InfoQ 只给一句「点击查看原文」，按长度扣分会把整个源挤到后面。
+    if item["summary"] and len(item["summary"]) < 20:
         value -= 1
     points = hn_points(item)
     if points >= 0 and points < 100:

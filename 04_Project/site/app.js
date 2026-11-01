@@ -7,7 +7,9 @@
   var DATA = window.DIGEST || { index: [], issues: {} };
   var app = document.getElementById('app');
   var nav = document.getElementById('sessions');
-  var MAX_CHIPS = 16;
+  // 必须与 build.EMBED_RECENT 一致：按钮数超过内嵌期次数，离线点开就是空的。
+  // 这个值由构建时写进 data.js，不再两边各写一份。
+  var MAX_CHIPS = DATA.embedLimit || 14;
   var currentId = '';
 
   var WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
@@ -45,6 +47,12 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  // 链接来自外部 RSS，不可信：只放行 http(s)，其余一律不给跳。
+  // 否则 javascript: 开头的 url 会被当脚本执行。
+  function safeUrl(url) {
+    return /^https?:\/\//i.test(String(url || '')) ? url : '#';
   }
 
   function parseDate(iso) {
@@ -91,8 +99,8 @@
       : '<p class="intro">本期尚未生成中文摘要，标题为原文语言。</p>';
 
     if (!issue.count) {
-      app.innerHTML = head + '<div class="empty"><strong>这一档没有新动静</strong>' +
-        '上一期之后没有出现新的 AI 消息，晚上或明天再看。</div>';
+      app.innerHTML = head + '<div class="empty"><strong>今天没有新动静</strong>' +
+        '抓取到了，但没有符合口径的新消息，明天再看。</div>';
       return;
     }
 
@@ -112,7 +120,7 @@
             '<time datetime="' + esc(item.published) + '">' +
               esc(timeLabel(item.published, issue.date)) + '</time>' +
           '</div>' +
-          '<h2 class="title"><a href="' + esc(item.url) + '" target="_blank" ' +
+          '<h2 class="title"><a href="' + esc(safeUrl(item.url)) + '" target="_blank" ' +
             'rel="noopener noreferrer">' + esc(title) + '</a></h2>' +
           summary +
         '</div></li>';

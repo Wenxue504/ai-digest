@@ -11,7 +11,7 @@
 
 ## 决策
 
-- 定时：**GitHub Actions cron**（UTC `0 4 * * *` 与 `0 10 * * *` = 北京 12:00 / 18:00）
+- 定时：**GitHub Actions cron**（UTC `0 4 * * *` = 北京 12:00，一天一期）
 - 托管：**GitHub Pages**，发布分支 `gh-pages`，内容 = 构建产物根目录
 - 仓库公开；代码与新闻数据均无密钥
 
@@ -21,8 +21,7 @@
 - ✅ 零成本（公开仓库 Actions 不限量，Pages 免费）
 - ✅ 主分支保持六区结构干净，构建产物只存在于 `gh-pages` 分支
 - ⚠️ 仓库必须公开
-- ⚠️ Actions cron 有 5–20 分钟延迟，不能依赖「12:00 整」
-- ⚠️ 境外 runner 抓国内源（量子位 / InfoQ）成功率未知，需观察；失败自动降级不报错
+- ⚠️ Actions cron 有 5–20 分钟延迟，不能依赖「12:00 整」- ⚠️ 境外 runner 抓国内源（量子位 / InfoQ）成功率未知，需观察；失败自动降级不报错
 - ⚠️ 本机 `github.com` 不可达，日常提交需走 `api.github.com`（Contents API），不能依赖 `git push`
 
 ## 备选方案

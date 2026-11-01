@@ -1,4 +1,4 @@
-"""构建：把入选条目装配成「一期」，再把所有期次渲染成静态站。
+"""构建：把候选池装配成「一期」，再把所有期次渲染成静态站。
 
 关键约束：**摘要可以缺失**。整条管线在 content/summaries/ 为空时
 必须依然产出一份完整可读的页面（见 ADR 0001）。
@@ -6,12 +6,16 @@
 
 import json
 import shutil
+import sys
 from datetime import datetime
 
 from paths import ISSUES_DIR, SITE_OUT, SITE_SRC, SUMMARIES_DIR
 
-CATEGORY_ORDER = ("模型", "产品", "资本", "研究", "政策", "硬件")
-EMBED_RECENT = 14  # 页面内嵌最近 14 期（约一周），更早的按需 fetch
+EMBED_RECENT = 14  # 内嵌最近 14 期；前端期次按钮数也从 data.js 读这个值，不再各写一份
+
+
+def _log(msg: str) -> None:
+    print(msg, file=sys.stderr)
 
 
 def _read_json(path, default=None):
@@ -36,6 +40,22 @@ def load_summaries(date_str: str) -> dict:
     return payload.get("items", {})
 
 
+def _merge(rendered, summaries):
+    """把摘要盖到已渲染条目上并重排。build_issue 与 apply_summaries 共用这一份。"""
+    for item in rendered:
+        extra = summaries.get(item["id"])
+        if not extra:
+            continue
+        item["title_zh"] = extra.get("title_zh") or item.get("title_zh", "")
+        item["summary"] = extra.get("summary") or item.get("summary", "")
+        item["category"] = extra.get("category") or item["category"]
+        item["rank_hint"] = extra.get("rank", item.get("rank_hint", 0))
+
+    if any(item.get("rank_hint") for item in rendered):
+        rendered.sort(key=lambda r: (r.get("rank_hint") or 999, -r.get("score", 0)))
+    return rendered
+
+
 def build_issue(candidates, date_str: str, now: datetime,
                 limit: int = 15, dropped: int = 0) -> dict:
     """candidates 是完整候选池（可 50 条），本函数负责选出最终的 limit 条。
@@ -44,30 +64,36 @@ def build_issue(candidates, date_str: str, now: datetime,
     （见 docs/ranking.md §6）。
     """
     summaries = load_summaries(date_str)
+    pool_ids = {c["id"] for c in candidates}
 
-    rendered = []
-    for item in candidates:
-        extra = summaries.get(item["id"], {})
-        rendered.append(
-            {
-                "id": item["id"],
-                "title_zh": extra.get("title_zh") or "",
-                "title_orig": item["title"],
-                "summary": extra.get("summary") or "",
-                "url": item["url"],
-                "source": item["source"],
-                "published": item["published"].isoformat(),
-                "category": extra.get("category") or item["category"],
-                "score": item["score"],
-                "rank_hint": extra.get("rank", 0),
-            }
-        )
+    stray = [key for key in summaries if key not in pool_ids]
+    if stray:
+        _log(f"  ⚠ {len(stray)} 条摘要的 id 不在候选池里（多半是池被换过），已忽略："
+             f"{', '.join(stray[:5])}")
 
-    # AI 若给了 rank，就按 rank 重排；没给就保持脚本的分数序
-    if any(r["rank_hint"] for r in rendered):
-        rendered.sort(key=lambda r: (r["rank_hint"] or 999, -r["score"]))
+    rendered = [
+        {
+            "id": item["id"],
+            "title_zh": "",
+            "title_orig": item["title"],
+            "summary": "",
+            "url": item["url"],
+            "source": item["source"],
+            "published": item["published"].isoformat(),
+            "category": item["category"],
+            "score": item["score"],
+            "rank_hint": 0,
+        }
+        for item in candidates
+    ]
 
-    rendered = rendered[:limit]
+    rendered = _merge(rendered, summaries)[:limit]
+
+    if summaries:
+        missing = [r["id"] for r in rendered if not r["summary"]]
+        if missing:
+            _log(f"  ⚠ {len(missing)}/{len(rendered)} 条没匹配上摘要，将显示原文标题："
+                 f"{', '.join(missing)}")
 
     return {
         "id": date_str,
@@ -85,28 +111,18 @@ def save_issue(issue: dict) -> None:
 
 
 def apply_summaries(issue: dict) -> dict:
-    """把已落盘的摘要盖回一期，并按其 rank 重排。
-
-    这是「AI 层写完摘要之后」唯一需要的动作：不用重新抓取，
-    因此云端可以只凭 content/ 里的东西重建出最终页面。
-    """
+    """把已落盘的摘要盖回一期并重排（不重新抓取、不重新选条目）。"""
     summaries = load_summaries(issue["date"])
     if not summaries:
         return issue
 
-    for item in issue["items"]:
-        extra = summaries.get(item["id"])
-        if not extra:
-            continue
-        item["title_zh"] = extra.get("title_zh") or item.get("title_zh", "")
-        item["summary"] = extra.get("summary") or item.get("summary", "")
-        item["category"] = extra.get("category") or item["category"]
-        item["rank_hint"] = extra.get("rank", item.get("rank_hint", 0))
+    issue["items"] = _merge(issue["items"], summaries)
+    issue["has_ai_summary"] = any(item.get("summary") for item in issue["items"])
 
-    if any(i.get("rank_hint") for i in issue["items"]):
-        issue["items"].sort(key=lambda r: (r.get("rank_hint") or 999, -r.get("score", 0)))
-
-    issue["has_ai_summary"] = any(i.get("summary") for i in issue["items"])
+    missing = [item["id"] for item in issue["items"] if not item["summary"]]
+    if missing:
+        _log(f"  ⚠ {issue['id']}：{len(missing)}/{len(issue['items'])} 条没有摘要，"
+             f"将显示原文标题：{', '.join(missing)}")
     return issue
 
 
@@ -147,14 +163,21 @@ def list_issues():
 
 
 def render_site() -> dict:
-    """把 site/ 模板与全部期次渲染成成品目录。返回构建摘要。"""
+    """把 site/ 模板与全部期次渲染成成品目录。返回构建摘要。
+
+    **先整目录清空再写**：否则上一版删掉的期次会留在 data/issues/ 里，
+    拿本地产物一发布就把死数据推上线了。
+    """
+    if SITE_OUT.exists():
+        shutil.rmtree(SITE_OUT)
     SITE_OUT.mkdir(parents=True, exist_ok=True)
+
     for asset in SITE_SRC.iterdir():
         if asset.is_file():
             shutil.copy2(asset, SITE_OUT / asset.name)
 
     entries = list_issues()
-    embed = entries[:EMBED_RECENT]
+    embed = {entry["id"] for entry in entries[:EMBED_RECENT]}
 
     issues = {}
     data_dir = SITE_OUT / "data" / "issues"
@@ -164,22 +187,43 @@ def render_site() -> dict:
         if not payload:
             continue
         _write_json(data_dir / f"{entry['id']}.json", payload)
-        if entry["id"] in {e["id"] for e in embed}:
+        if entry["id"] in embed:
             issues[entry["id"]] = payload
 
     bundle = {
         "generatedAt": datetime.now().astimezone().isoformat(),
+        "embedLimit": EMBED_RECENT,
         "index": entries,
         "issues": issues,
-        "embedded": len(issues),
     }
     (SITE_OUT / "data.js").write_text(
         "window.DIGEST = " + json.dumps(bundle, ensure_ascii=False, separators=(",", ":")) + ";\n",
         encoding="utf-8",
     )
-    _write_json(SITE_OUT / "data" / "index.json", {"index": entries})
 
     # GitHub Pages 默认跑 Jekyll，会把某些文件吃掉；一个空文件就能关掉
     (SITE_OUT / ".nojekyll").write_text("", encoding="utf-8")
 
     return {"issues": len(entries), "embedded": len(issues), "out": str(SITE_OUT)}
+
+
+def export_markdown(issue: dict, out_path) -> None:
+    """把一期导成可读的 markdown。与站点用同一份数据，保证两边一致。"""
+    lines = [
+        f"# AI 日报 · {issue['date']}",
+        "",
+        f"共 {issue['count']} 条，按重要度排序。摘要由 AI 改写，点链接核对原文。",
+        "",
+    ]
+    for n, item in enumerate(issue["items"], 1):
+        lines.append(f"## {n}. {item['title_zh'] or item['title_orig']}")
+        lines.append(f"{item['category']} · {item['source']} · {item['published'][11:16]}")
+        lines.append("")
+        if item["summary"]:
+            lines.append(item["summary"])
+            lines.append("")
+        lines.append(f"[原文]({item['url']})")
+        lines.append("")
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines), encoding="utf-8")

@@ -28,11 +28,12 @@
 ├── digest/           # 抓取/排序/构建，纯标准库
 ├── site/             # 前端模板（index.html / app.js / style.css）
 ├── content/          # ★ 内容真值，进 git
-│   ├── issues/       #   每期一条 JSON：2026-11-01-12.json
-│   └── summaries/    #   AI 摘要：2026-11-01.json（可缺失）
+│   ├── pools/        #   候选池：2026-11-01.json（★ 只有云端能写）
+│   ├── issues/       #   每期正文：2026-11-01.json（★ 只有云端能写）
+│   └── summaries/    #   AI 摘要：2026-11-01.json（只有 AI 层能写，可缺失）
 └── docs/             # 技术文档 + adr/
 
-03_OutputFiles/deliverables/site/   # 构建产物，不进 git，由 CI 或本地构建生成
+03_OutputFiles/deliverables/site/   # 构建产物，不进 git，每次构建前整目录清空
 05_Datas/raw/                       # 原始 RSS 落盘（调试用），不进 git
 ```
 
@@ -41,9 +42,10 @@
 ## 4. 代码约定
 
 - **只用 Python 标准库**。不引 feedparser、不用第三方包——云端 runner 和本机都不需要 `pip install`，这是「接手测试」的一部分。
-- 网络请求一律带 `Accept-Encoding: identity`（避免 gzip 解压分支）与 `User-Agent`（部分源无 UA 直接 403）。
+- 网络请求一律带 `Accept-Encoding: identity`（避免 gzip 解压分支）与 `User-Agent`（部分源无 UA 直接 403）；单响应上限 8 MB。
 - 任何源失败**不得中断整轮构建**：捕获 → 记 warning → 跳过。禁止 `except: pass`，至少记日志。
-- 抓取超时 **20 秒**，单轮总耗时目标 < 30 秒。
+- 单请求超时 **20 秒**；整轮墙钟上限 **30 秒**（`FETCH_DEADLINE`）。并发用的是**守护线程**而非 `ThreadPoolExecutor`——后者线程非守护，解释器退出时会 join，超时形同虚设。
+- 摘要 id 对不上**必须报 warning 并给出 id**，不许静默丢弃。
 - 排序/去重逻辑改动必须同时更新 `docs/ranking.md`（同一提交内）。
 
 ## 5. 内容约定
