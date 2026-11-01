@@ -11,7 +11,6 @@
   var currentId = '';
 
   var WEEK = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-  var SLOT_LABEL = { 12: '午间', 18: '晚间' };
 
   /* ── 已读记录（只存本机，不上传） ───────────── */
 
@@ -71,8 +70,7 @@
 
   function chipLabel(entry) {
     var d = parseDate(entry.date + 'T00:00:00');
-    var label = d ? (d.getMonth() + 1) + '/' + d.getDate() : entry.date;
-    return label + ' ' + (SLOT_LABEL[entry.slot] || entry.slot + '时');
+    return d ? (d.getMonth() + 1) + '/' + d.getDate() : entry.date;
   }
 
   function emptyBlock(title, hint) {
@@ -86,8 +84,7 @@
     var set = readSet(issue.id);
 
     var head = '<div class="dateline"><h1>' + esc(dateTitle(issue)) + '</h1>' +
-      '<span class="sub">' + esc(SLOT_LABEL[issue.slot] || '') + '版 · ' +
-      issue.count + ' 条</span></div>';
+      '<span class="sub">' + issue.count + ' 条</span></div>';
 
     var intro = issue.has_ai_summary
       ? '<p class="intro">按重要度排序，点标题看原文。</p>'

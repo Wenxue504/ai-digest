@@ -1,10 +1,14 @@
-"""入口：抓取 → 排序 → 装配一期 → 渲染静态站。
+"""入口：抓取 → 排序 → 装配当天一期 → 渲染静态站。
+
+一天只有一期（12:00）。18:00 的增量档已于 2026-11-01 移除，
+理由：欧美白天新闻在中午那期已经落地，晚间增量太薄，不值得再跑一次。
 
 用法：
-    python 04_Project/digest/run.py                # 今天 12 点档
-    python 04_Project/digest/run.py --slot 18      # 今天 18 点档（增量）
-    python 04_Project/digest/run.py --dry-run      # 只抓不建页，看候选池
-    python 04_Project/digest/run.py --date 2026-11-01 --slot 12
+    python 04_Project/digest/run.py                # 抓取并生成今天这一期
+    python 04_Project/digest/run.py --dry-run      # 只抓不写，看候选池
+    python 04_Project/digest/run.py --refresh      # 不抓取，用已落盘候选池 + 摘要重建
+    python 04_Project/digest/run.py --rerender     # 不抓取，只把摘要盖回已有期次
+    python 04_Project/digest/run.py --date 2026-10-31
 """
 
 import argparse
@@ -24,14 +28,13 @@ from digest.fetch import fetch_source, log  # noqa: E402
 from digest.sources import SOURCES  # noqa: E402
 
 CST = timezone(timedelta(hours=8))
-LIMIT_FULL = 15
-LIMIT_INCREMENTAL = 8
+LIMIT = 15
 POOL_FOR_AI = 50  # 候选池上限：再多就是在烧额度（见 ADR 0003）
 FETCH_DEADLINE = 60  # 整轮抓取墙钟上限（秒）
 
 
 def collect(now: datetime):
-    """并发抓全部源，返回 (标准化条目, 每个源的成败记录)。
+    """并发抓全部源，返回 (标准化条目, 失败的源名)。
 
     用 wait(timeout=) 而不是 map：map 会一直等最慢的那个，
     任何一个源在云端挂起（实测出现过）都会把整轮拖死。
@@ -83,11 +86,10 @@ def collect(now: datetime):
     return normalized, failed
 
 
-def write_pool(items, date_str: str, slot: int, now: datetime) -> Path:
+def write_pool(items, date_str: str, now: datetime) -> Path:
     """给 AI 层看的候选池。故意截断摘要——它不需要读全文（见 ADR 0003）。"""
     payload = {
         "date": date_str,
-        "slot": slot,
         "generated_at": now.isoformat(),
         "candidates": [
             {
@@ -103,7 +105,7 @@ def write_pool(items, date_str: str, slot: int, now: datetime) -> Path:
             for i in items[:POOL_FOR_AI]
         ],
     }
-    path = INTERIM_DIR / f"pool_{date_str}_{slot:02d}.json"
+    path = INTERIM_DIR / f"pool_{date_str}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return path
@@ -132,21 +134,14 @@ def load_pool(path: Path):
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="抓取 AI 行业新闻并生成一期报表")
-    parser.add_argument("--slot", type=int, default=12, choices=[12, 18])
+    parser = argparse.ArgumentParser(description="抓取 AI 行业新闻并生成当天一期报表")
     parser.add_argument("--date", default="", help="默认今天（北京时间）")
     parser.add_argument("--dry-run", action="store_true", help="只抓取并打印候选池，不生成页面")
     parser.add_argument("--save-raw", action="store_true", help="把候选池另存到 05_Datas/raw/")
-    parser.add_argument(
-        "--refresh",
-        action="store_true",
-        help="不重新抓取，用已落盘的候选池 + 现有摘要重建这一期（AI 层写完后调用）",
-    )
-    parser.add_argument(
-        "--rerender",
-        action="store_true",
-        help="重算全部期次套用摘要并重建站点（云端在 push 时用，不抓取）",
-    )
+    parser.add_argument("--refresh", action="store_true",
+                        help="不重新抓取，用已落盘的候选池 + 现有摘要重建（AI 层写完后调用）")
+    parser.add_argument("--rerender", action="store_true",
+                        help="重算全部期次套用摘要并重建站点（云端在 push 时用，不抓取）")
     args = parser.parse_args()
 
     if args.rerender:
@@ -157,18 +152,17 @@ def main() -> int:
 
     now = datetime.now(CST)
     date_str = args.date or now.strftime("%Y-%m-%d")
-    limit = LIMIT_INCREMENTAL if args.slot == 18 else LIMIT_FULL
-    kind = "incremental" if args.slot == 18 else "full"
 
     if args.refresh:
-        pool_path = INTERIM_DIR / f"pool_{date_str}_{args.slot:02d}.json"
+        pool_path = INTERIM_DIR / f"pool_{date_str}.json"
         if not pool_path.exists():
             log(f"没有找到候选池 {pool_path}，先跑一次正常抓取")
             return 1
         pool = load_pool(pool_path)
-        log(f"[refresh] 用 {pool_path.name} 重建 {date_str}-{args.slot:02d}，候选 {len(pool)} 条")
+        log(f"[refresh] 用 {pool_path.name} 重建 {date_str}，候选 {len(pool)} 条")
+        dropped = len(pool)
     else:
-        log(f"[{now:%Y-%m-%d %H:%M}] 开始抓取，档位 {args.slot:02d}，日期 {date_str}")
+        log(f"[{now:%Y-%m-%d %H:%M}] 开始抓取 {date_str}")
         items, failed = collect(now)
         log(f"  合计 {len(items)} 条原始条目"
             + (f"；失败源：{', '.join(failed)}" if failed else "；全部源正常"))
@@ -176,22 +170,14 @@ def main() -> int:
             log("没有任何条目，放弃本次构建（不生成空壳）")
             return 1
 
-        # 增量档：只保留上一期（同一天 12 点）之后发布的
-        if args.slot == 18:
-            previous = build._read_json(build.ISSUES_DIR / f"{date_str}-12.json", {})
-            if previous.get("generated_at"):
-                cutoff = datetime.fromisoformat(previous["generated_at"])
-                items = [i for i in items if i["published"] and i["published"] > cutoff]
-                log(f"  增量模式：只保留 {cutoff:%H:%M} 之后的，剩 {len(items)} 条")
-
         pool, dropped = rank.rank(items, now, POOL_FOR_AI)
-        log(f"  候选池 {len(pool)} 条（最终入选上限 {limit}），淘汰 {dropped} 条")
-        pool_path = write_pool(pool, date_str, args.slot, now)
+        log(f"  候选池 {len(pool)} 条（最终入选上限 {LIMIT}），淘汰 {dropped} 条")
+        pool_path = write_pool(pool, date_str, now)
         log(f"  候选池 → {pool_path}")
 
         if args.save_raw:
             RAW_DIR.mkdir(parents=True, exist_ok=True)
-            (RAW_DIR / f"selected_{date_str}_{args.slot:02d}.json").write_text(
+            (RAW_DIR / f"selected_{date_str}.json").write_text(
                 json.dumps(
                     [{k: (v.isoformat() if isinstance(v, datetime) else v) for k, v in i.items()}
                      for i in pool],
@@ -200,23 +186,16 @@ def main() -> int:
             )
 
         if args.dry_run:
-            for n, item in enumerate(pool[:limit], 1):
+            for n, item in enumerate(pool[:LIMIT], 1):
                 log(f"  {n:2d}. [{item['score']:>4}] [{item['category']}] {item['title'][:60]}")
             return 0
 
-    cutoff_iso = ""
-    if args.slot == 18:
-        previous = build._read_json(build.ISSUES_DIR / f"{date_str}-12.json", {})
-        cutoff_iso = previous.get("generated_at", "")
-
-    issue = build.build_issue(
-        pool, args.slot, date_str, now, kind, limit=limit,
-        cutoff_iso=cutoff_iso, dropped=len(pool),
-    )
+    issue = build.build_issue(pool, date_str, now, limit=LIMIT, dropped=dropped)
     build.save_issue(issue)
     summary = build.render_site()
 
-    log(f"  已生成 {issue['id']}（{issue['count']} 条，AI 摘要：{'有' if issue['has_ai_summary'] else '无'}）")
+    log(f"  已生成 {issue['id']}（{issue['count']} 条，AI 摘要："
+        f"{'有' if issue['has_ai_summary'] else '无'}）")
     log(f"  站点 {summary['issues']} 期，内嵌 {summary['embedded']} 期 → {summary['out']}")
     return 0
 

@@ -1,11 +1,10 @@
 name: digest
 
-# 云端定时：北京时间 12:00 与 18:00（UTC 04:00 / 10:00）。
+# 云端定时：每天北京时间 12:00（UTC 04:00），一天一期。
 # 跑在 GitHub 的机器上，跟用户电脑开不开机无关——这是本工程的核心约束（ADR 0002）。
 on:
   schedule:
     - cron: "0 4 * * *"
-    - cron: "0 10 * * *"
   push:
     branches: [main]
     paths:
@@ -16,11 +15,8 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "fetch=重新抓取一期；rerender=只套用摘要重算（不抓取）"
+        description: "fetch=重新抓取；rerender=只套用摘要重算（不抓取）"
         default: "fetch"
-      slot:
-        description: "档位：12 或 18（留空则按当前北京时间自动判断）"
-        default: ""
       dry_run:
         description: "只测试抓取、不写入任何内容（输入 1 开启）"
         default: ""
@@ -45,7 +41,7 @@ jobs:
           python-version: "3.12"
 
       # push 触发 = AI 层刚提交了摘要，只需重算套用，不重新抓取
-      # schedule / 手动触发 = 正常两更，按档位抓取
+      # schedule / 手动触发 = 正常抓取
       - name: 生成当期
         run: |
           if [ "${{ github.event_name }}" = "push" ] || \
@@ -55,20 +51,13 @@ jobs:
             exit 0
           fi
 
-          SLOT="${{ github.event.inputs.slot }}"
-          if [ -z "$SLOT" ]; then
-            HOUR=$(TZ=Asia/Shanghai date +%H)
-            if [ "$HOUR" -ge 15 ]; then SLOT=18; else SLOT=12; fi
-          fi
-          echo "→ 档位 ${SLOT}"
-
           if [ "${{ github.event.inputs.dry_run }}" = "1" ]; then
             echo "→ 试跑模式，不写入"
-            python 04_Project/digest/run.py --slot "$SLOT" --dry-run
+            python 04_Project/digest/run.py --dry-run
             exit 0
           fi
 
-          python 04_Project/digest/run.py --slot "$SLOT"
+          python 04_Project/digest/run.py
 
       # 生成的期次必须回到 main，否则下一次构建读不到历史——
       # gh-pages 每次被整体覆盖，旧期次就丢了。

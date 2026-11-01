@@ -36,14 +36,13 @@ def load_summaries(date_str: str) -> dict:
     return payload.get("items", {})
 
 
-def build_issue(candidates, slot: int, date_str: str, now: datetime, kind: str,
-                limit: int = 15, cutoff_iso: str = "", dropped: int = 0) -> dict:
+def build_issue(candidates, date_str: str, now: datetime,
+                limit: int = 15, dropped: int = 0) -> dict:
     """candidates 是完整候选池（可 50 条），本函数负责选出最终的 limit 条。
 
     AI 层可以给任意候选打 rank 把它提上来——但只能从池内提，不能捞池外的
     （见 docs/ranking.md §6）。
     """
-    issue_id = f"{date_str}-{slot:02d}"
     summaries = load_summaries(date_str)
 
     rendered = []
@@ -71,12 +70,9 @@ def build_issue(candidates, slot: int, date_str: str, now: datetime, kind: str,
     rendered = rendered[:limit]
 
     return {
-        "id": issue_id,
+        "id": date_str,
         "date": date_str,
-        "slot": slot,
-        "kind": kind,
         "generated_at": now.isoformat(),
-        "cutoff": cutoff_iso,
         "count": len(rendered),
         "dropped": dropped,
         "has_ai_summary": any(r["summary"] for r in rendered),
@@ -142,8 +138,6 @@ def list_issues():
             {
                 "id": data["id"],
                 "date": data["date"],
-                "slot": data["slot"],
-                "kind": data.get("kind", "full"),
                 "count": data.get("count", 0),
                 "has_ai_summary": data.get("has_ai_summary", False),
             }
