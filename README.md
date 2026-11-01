@@ -55,18 +55,19 @@ GitHub Actions（云端，12:00 / 18:00 北京时间）
 | --- | --- |
 | 抓取 / 排序 / 构建 | ✅ 已跑通，9 个源全部正常 |
 | 站点前端 | ✅ 已可用，390px 下无溢出 |
-| 中文摘要（首期） | ✅ 已人工写好 15 条 |
+| 中文摘要（首期） | ✅ 已写好 15 条 |
 | Pages 发布 | ✅ 已上线 <https://wenxue504.github.io/ai-digest/> |
-| Actions 定时 | ⏳ **待授权**：token 缺 `workflow` 权限，`.github/workflows/digest.yml` 推不上去 |
-| 12:15 AI 摘要自动化 | ⏳ 待定，取决于是否愿意付这笔额度 |
+| Actions 定时 | ✅ 已生效：云端试跑 9 源全通（含国内源），每天 12:00 / 18:00 自动两更 |
+| 12:15 AI 摘要自动化 | ✅ 已建 WorkBuddy 定时任务 |
 
-**待授权这一步**：在本机终端跑一次
+云端抓取能力已实测（2026-11-01 手动试跑）：量子位、InfoQ 中文这两个国内源从 GitHub 服务器访问**全部正常**，230 条原始条目与本地一致。
+
+手动补一期（不依赖云端）：
 
 ```bash
-gh auth refresh -s workflow
+python 04_Project/digest/run.py            # 抓取并生成
+python 04_Project/digest/run.py --rerender # 只套用摘要重建
 ```
-
-浏览器里点一下 Authorize，之后就能把 workflow 推上去。在此之前，站点靠手动 `run.py` + 推 `gh-pages` 更新，功能完整但没有定时。
 
 ## 文档
 
