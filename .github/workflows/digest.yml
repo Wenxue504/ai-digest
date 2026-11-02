@@ -4,7 +4,12 @@ name: digest
 # 跑在 GitHub 的机器上，跟用户电脑开不开机无关——这是本工程的核心约束（ADR 0002）。
 on:
   schedule:
+    # 主时点：北京 12:00。2026-11-02 实测这个 schedule 没触发过（首次 push 到首个 cron
+    # 只有 22 小时，怀疑注册延迟），因此补一个后手时点，见第二步的幂等判断。
     - cron: "0 4 * * *"
+    # 后手时点：北京 13:20。此时池通常已存在，只做 --rerender，成本可忽略；
+    # 只有在主时点被丢弃时它才会真正抓取。
+    - cron: "20 5 * * *"
   push:
     branches: [main]
     paths:
@@ -58,6 +63,15 @@ jobs:
           if [ "${{ github.event.inputs.dry_run }}" = "1" ]; then
             echo "→ 试跑模式，不写入"
             python 04_Project/digest/run.py --dry-run
+            exit 0
+          fi
+
+          # 幂等：今天已经有候选池就只重算，不重复抓取。
+          # 这让后手 cron、手动重试、重复投递都变成安全操作。
+          TODAY=$(TZ=Asia/Shanghai date +%F)
+          if [ -f "04_Project/content/pools/${TODAY}.json" ]; then
+            echo "→ 今天（${TODAY}）已有候选池，只重算不抓取"
+            python 04_Project/digest/run.py --rerender
             exit 0
           fi
 

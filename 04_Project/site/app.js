@@ -86,6 +86,22 @@
       esc(hint) + '</div>';
   }
 
+  /* 用浏览器本地日期判断，不用构建时刻——缓存过的页面也要能显示「今天没更新」 */
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  function staleBanner(latestDate) {
+    if (!latestDate || latestDate >= todayStr()) return '';
+    var d = parseDate(latestDate + 'T00:00:00');
+    var label = d ? (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日' : latestDate;
+    return '<div class="stale">今天这一期还没生成，下面是 <b>' + esc(label) +
+      '</b> 的内容。云端定时任务可能没跑，去 Actions 看一眼。</div>';
+  }
+
   /* ── 渲染一期 ──────────────────────────────── */
 
   function renderIssue(issue, entry) {
@@ -169,6 +185,9 @@
     currentId = id;
     renderChips(id);
     setHash(id);
+
+    var notice = document.getElementById('notice');
+    if (notice) notice.innerHTML = staleBanner(DATA.index[0].date);
 
     if (DATA.issues[id]) {
       renderIssue(DATA.issues[id], entry);

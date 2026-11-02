@@ -192,8 +192,23 @@ main {
 .item.read { opacity: 0.34; }
 .item.read .sum { display: none; }
 
-.empty {
+/* 今天这一期还没生成时的提示条 */
+.stale {
   max-width: 640px;
+  margin: 16px auto 0;
+  padding: 12px 14px;
+  border: 1px solid #e8d7b8;
+  border-left: 3px solid #b8791f;
+  border-radius: 4px;
+  background: #fdf6e7;
+  color: #6b4a12;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.stale b { font-weight: 600; }
+
+.empty {  max-width: 640px;
   margin: 56px auto;
   text-align: center;
   color: var(--faint);
