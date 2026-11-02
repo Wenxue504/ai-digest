@@ -60,7 +60,29 @@
 
 - 发布分支 `gh-pages`（内容 = 构建产物根目录），主分支 `main` 保持六区干净
 - 仓库名 `ai-digest`，公开（免费账户 Pages 不支持私有仓），站址 `https://wenxue504.github.io/ai-digest/`
-- **禁止**在仓库中出现任何 token / key；提交走 `api.github.com`（本机 `github.com` 不可达）
+- **禁止**在仓库中出现任何 token / key
+
+### 提交时的坑（2026-11-02 实测，两条通道权限不同）
+
+| 通道 | 凭证 | 能不能推 workflow 文件 |
+| --- | --- | --- |
+| `git push` | Windows 凭据管理器（`git credential fill`），scope 含 `workflow` | 能 |
+| `gh api` / `gh auth token` | gh 自己的 OAuth token，scope 只有 `gist, repo` | **不能**，建 tree 时返回 **404**（不是 403） |
+
+- `github.com` 时通时断。推送一律 `timeout 60 git push`，**卡住就是挂了**，
+  不要用重试循环（每次都重新挂起）。失败就改走 Git Data API（blob → tree → commit → PATCH ref）
+- 走 API 时若含 `.github/workflows/`，必须用凭据管理器那个 token
+  （`printf 'protocol=https\nhost=github.com\n\n' | git credential fill`），否则 404
+
+### 定时不可靠时的兜底链
+
+2026-11-02 实测 `schedule` 整次不触发（0 次），所以线上更新实际走过这条链：
+
+1. 主 cron 12:00 → 2. 后手 cron 13:20（同为 schedule，同样可能被吞）→
+3. WorkBuddy 12:15 发现没有池，用 `gh workflow run` 让云端补跑一次 →
+4. 页面上的「今天还没更新」提示条兜底告知用户
+
+任何一环补上，内容就能出；全断时提示条会明说。**不要把「提示条出现」当正常状态。**；提交走 `api.github.com`（本机 `github.com` 不可达）
 
 ## 7. 时间与调度
 
