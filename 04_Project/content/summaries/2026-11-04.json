@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-04",
+  "generated_by": "ai",
+  "items": {
+    "55dd7e97ced5": {
+      "title_zh": "Anthropic 警告已非常接近 RSI 能力，即能自我构建的 AI",
+      "summary": "Anthropic 公开表示其模型能力已非常接近 RSI（递归自我改进），即 AI 能高效训练自身、进而带动能力加速提升的临界点。这一判断把「AI 自己造 AI」从远期假设拉到了需要提前讨论安全与治理的距离。",
+      "category": "模型",
+      "rank": 1
+    },
+    "4179bff1533b": {
+      "title_zh": "皮查伊长访谈：谷歌宁愿少卖云算力，也要优先留给 Gemini",
+      "summary": "在近期一次长访谈中，皮查伊披露谷歌会压缩对外出售的云算力，优先保障 Gemini 的需求，并谈及 AI 自我改进。头部厂商把算力从「卖出去」转为「自己用」，说明当前的瓶颈已从需求端转向供给端。",
+      "category": "资本",
+      "rank": 2
+    },
+    "2437af63b2f8": {
+      "title_zh": "Anthropic 仍在为算力的经济账发愁：本该改善的毛利反而变差",
+      "summary": "报道指出，在 Anthropic 的算力毛利本应随规模改善的时点，实际情况却在恶化。这说明模型公司的成本未必随规模自然下降，算力支出仍是决定谁能长期留在牌桌上的关键变量。",
+      "category": "资本",
+      "rank": 3
+    },
+    "662bf89dbff2": {
+      "title_zh": "OpenAI 称 ChatGPT 在搜索上正追上 Google",
+      "summary": "OpenAI 表示，通过 ChatGPT 发起的搜索查询量正在快速增长，搜索习惯正从「Google 一下」转向直接问对话式助手。搜索入口的迁移会直接冲击 Google 的广告基本盘，也是 OpenAI 把模型能力变现的主路径。",
+      "category": "产品",
+      "rank": 4
+    },
+    "f901cc10a3c4": {
+      "title_zh": "Anthropic 正在研发 FlashProve，用于证明 AI 模型的身份",
+      "summary": "Anthropic 正在开发名为 FlashProve 的系统，让任何人都能核验一条 AI 回复确实来自它所声称的模型。模型身份可验证之后，API 转售、冒名接口和内容溯源才有技术依据。",
+      "category": "产品",
+      "rank": 5
+    },
+    "c69664e34de2": {
+      "title_zh": "推理服务创业公司 Fal 估值翻倍至 160 亿美元，Bessemer 领投 13 亿美元",
+      "summary": "成立五年的 AI 推理服务公司 Fal 完成 13 亿美元融资，由 Bessemer 领投，估值翻倍至 160 亿美元。推理环节的估值扩张，说明资本正从训练侧转向实际承载调用的服务层。",
+      "category": "资本",
+      "rank": 6
+    },
+    "0eaf3e3a7544": {
+      "title_zh": "Google 在拒绝 AI 功能的学校彻底关闭搜索服务",
+      "summary": "Google 确认，对拒绝启用其 AI 功能的学校将完全关闭搜索服务，理由是 AI 已整合进搜索引擎。把基础搜索与 AI 捆绑，会让教育机构在「用 AI」和「能搜索」之间被迫二选一。",
+      "category": "政策",
+      "rank": 7
+    },
+    "49792679d79f": {
+      "title_zh": "Apple 在 iOS 27.3 中允许 Siri 调用第三方 App 执行操作",
+      "summary": "随 iOS 27.3 推送，Apple 开放开发者让 Siri 在第三方 App 内执行操作，Siri 由此从问答助手变成能代为操作的系统级入口。这决定了 Apple 生态里的 AI 助手能否真正接管跨应用任务。",
+      "category": "产品",
+      "rank": 8
+    },
+    "da9a5824109f": {
+      "title_zh": "Postman 被指静默安装 AI 插件并尝试共享全部 API 数据",
+      "summary": "有用户在 Postman 的 GitHub 仓库提交 issue，称其未经提示自动安装 AI 插件，并尝试共享用户的 API 数据。开发工具默认开启数据外发，等于把接口凭证与业务流量暴露在用户不知情的位置。",
+      "category": "产品",
+      "rank": 9
+    },
+    "46dc2e1e8164": {
+      "title_zh": "在笔记本上运行的 Qwen 3.8 27B 也能解读模型权重",
+      "summary": "Simon Willison 记录了他用笔记本本地运行的 Qwen 3.8 27B 解读模型权重文件的过程。本地中小模型能完成这类任务，意味着敏感权重的分析不必再上传到云端。",
+      "category": "研究",
+      "rank": 10
+    },
+    "c7fb864905d9": {
+      "title_zh": "openJiuwen 开源 Agent-Memory，为 Agent 加入视听双流记忆",
+      "summary": "openJiuwen 发布 Agent-Memory，以视听双流的方式为 Agent 建立长视频记忆，官方称问答时延最高降低 97%。长视频理解的瓶颈通常在检索与记忆组织，这类开源组件可以直接接入现有 Agent 流程。",
+      "category": "研究",
+      "rank": 11
+    },
+    "35cfac85cbf4": {
+      "title_zh": "Anthropic 团队零 Rust 经验，靠 Claude 完成核心 API 跨语言重构",
+      "summary": "Anthropic 团队在没有 Rust 经验的情况下，借助 Claude 完成核心 API 的跨语言重构，据其披露 CPU 占用降低 40%、延迟降低 20%。这是一个可复用的参考：把陌生语言的迁移交给模型，人负责验收与边界。",
+      "category": "研究",
+      "rank": 12
+    },
+    "59cb8a96ca92": {
+      "title_zh": "等电等不及，数据中心开始用退役喷气发动机供电",
+      "summary": "并网和新涡轮机排队要数年，数据中心建设方开始改用退役航空发动机发电。电力接入已成为算力扩张的硬约束，代价是更低的发电效率和更高的排放。",
+      "category": "硬件",
+      "rank": 13
+    },
+    "dd34e5bf1c5e": {
+      "title_zh": "Palantir 美国商业收入首次超过政府收入",
+      "summary": "Palantir 本季美国商业收入首次超过美国政府收入，成为其最大来源。政府订单曾是其增长基本盘，收入结构转向企业侧后，业绩会更直接地受企业 IT 支出周期影响。",
+      "category": "资本",
+      "rank": 14
+    },
+    "2023d4b1aafd": {
+      "title_zh": "Netflix 推出 AI Discover 标签页，按心情推荐内容",
+      "summary": "Netflix 在电视应用中新增 AI Discover 标签页，首个实验功能按用户当下的心情给出推荐。推荐依据从「看过什么」转向「此刻想要什么」，是流媒体在内容发现环节的一次试验。",
+      "category": "产品",
+      "rank": 15
+    }
+  }
+}
