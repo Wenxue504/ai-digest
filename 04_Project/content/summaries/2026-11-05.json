@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-05",
+  "generated_by": "ai",
+  "items": {
+    "5279acc13e09": {
+      "title_zh": "GPT-Image-2.6 全量上线，支持直接生成 GIF 与 SVG",
+      "summary": "OpenAI 将图像模型 GPT-Image-2.6 全量上线，可按提示直接输出 GIF 与 SVG，原文称最快约 6 秒出图，同一篇报道还提到 6.2 Astra 的线索。动图与矢量图不再需要二次转换，对做设计、素材与前端的人来说，模型输出可以直接进入后续流程。",
+      "category": "产品",
+      "rank": 1
+    },
+    "77b538e36696": {
+      "title_zh": "谷歌用 Gemini 4 Argon 一夜优化 ADK 代码库的 20 万行代码",
+      "summary": "谷歌披露用 Gemini 4 Argon 在一夜之间对 ADK（Agent Development Kit）代码库的 20 万行代码完成了优化。这是把大模型直接用于大规模存量代码库维护的公开案例，也侧面透露了下一代 Gemini 的命名与使用方式。",
+      "category": "模型",
+      "rank": 2
+    },
+    "647d6f84febf": {
+      "title_zh": "OpenAI 将收购 Pierre Computer Company",
+      "summary": "Pierre Computer 官方账号发布消息称 OpenAI 将收购该公司，该条目在 Hacker News 获得 200 余点讨论。交易金额与业务细节尚未公开，但这是 OpenAI 通过并购补齐产品能力的又一步。",
+      "category": "资本",
+      "rank": 3
+    },
+    "70e60e39b208": {
+      "title_zh": "Meta 收购 AI 编程初创公司 Conductor",
+      "summary": "Meta 收购了 AI 编程初创公司 Conductor，后者的产品让工程师可以同时部署多支 agent 团队，并行处理项目的不同部分。大厂把「多 agent 并行开发」直接买进内部，说明 AI 编程的竞争正从补全单行代码转向组织级协作。",
+      "category": "资本",
+      "rank": 4
+    },
+    "0cb5ff0e4866": {
+      "title_zh": "OpenAI 投入 120 万美元，在 Linux 内核中找出 948 个漏洞",
+      "summary": "有报道称 OpenAI 花费 120 万美元、借助模型在 Linux 内核中挖出 948 个漏洞。内核是服务器与端侧设备共同的地基，这类结果让「用 AI 做安全审计」从演示走向可量化衡量的产出。",
+      "category": "研究",
+      "rank": 5
+    },
+    "95c5f7844825": {
+      "title_zh": "谷歌发布 ML Drift，为多种 GPU 加速端侧 AI 推理",
+      "summary": "谷歌发布 ML Drift，目标是让端侧 AI 推理在多种 GPU 上获得加速。端侧推理的瓶颈往往不在模型本身而在硬件适配，这类跨 GPU 的加速层直接决定手机与 PC 上的本地模型能不能跑得动。",
+      "category": "模型",
+      "rank": 6
+    },
+    "7c395892daad": {
+      "title_zh": "谷歌正式发布 Data Agent Kit，安全防护分为 Skill 与 IAM 两层",
+      "summary": "谷歌发布 Data Agent Kit，把数据类 agent 的安全防护拆成 Skill 与 IAM 两层。企业把 agent 接进数据仓库时，权限边界是最难处理的一环，官方给出分层方案意味着这类落地开始有可参照的工程范式。",
+      "category": "产品",
+      "rank": 7
+    },
+    "9850100fd463": {
+      "title_zh": "Anthropic 为重要开源项目提供可选的安全扫描服务",
+      "summary": "Anthropic 为重要开源项目新增可选的安全扫描服务。开源维护者长期缺安全人力，由模型厂商提供扫描入口能否真正覆盖关键路径，值得后续观察。",
+      "category": "模型",
+      "rank": 8
+    },
+    "539413c369c7": {
+      "title_zh": "腾讯混元 Hy4 实测：能力继承了几分产品基因",
+      "summary": "有评测对腾讯混元 Hy4 做了实测，以「腾讯的产品基因」为切入点检验模型的继承情况。国产模型迭代很快，第三方实测是判断它在真实任务上水平的主要依据之一。",
+      "category": "模型",
+      "rank": 9
+    },
+    "68d6e2cfb53f": {
+      "title_zh": "招商局狮子山实验室发布具身推理模型「驭物 Lion-ER-35B-A3B」",
+      "summary": "招商局狮子山实验室发布具身推理模型「驭物 Lion-ER-35B-A3B」，总参数 35B、仅激活 3B，原文称在十项基准上全线提升。它走的是「不靠堆砌数据」的路线，稀疏激活的规模也更适合部署在机器人本体侧。",
+      "category": "研究",
+      "rank": 10
+    },
+    "48d8c1552d58": {
+      "title_zh": "手机销量下滑，高通把赌注押向数据中心",
+      "summary": "高通在 2026 财年第四季度财报中表示，智能手机销量同比下滑约 20%，公司把数据中心作为新的增长方向。终端芯片厂商转向数据中心，说明 AI 算力需求正在重塑半导体行业的收入结构。",
+      "category": "硬件",
+      "rank": 11
+    },
+    "1c7da4acfcdd": {
+      "title_zh": "报道称苹果正削减内部 AI 使用预算",
+      "summary": "有报道称苹果正明显削减工程团队使用 AI 的预算。在一线大厂普遍加大投入的背景下，这种收缩会直接影响内部工具链的选型与外部供应商的订单。",
+      "category": "资本",
+      "rank": 12
+    },
+    "c69664e34de2": {
+      "title_zh": "推理初创公司 Fal 估值翻倍至 160 亿美元",
+      "summary": "成立五年的推理服务初创公司 Fal 完成 13 亿美元融资，由 Bessemer 领投，估值翻倍至 160 亿美元。推理侧的高估值说明市场押注的不只是训练算力，还有模型上线后持续产生的调用成本。",
+      "category": "资本",
+      "rank": 13
+    },
+    "f3f4f568585b": {
+      "title_zh": "Uber：上季度仅 4 单由 AI agent 完成叫车",
+      "summary": "Uber 披露 2026 年第三季度只有 4 单行程是通过第三方 AI agent 下单的。这与「agent 接管日常事务」的叙事形成明显反差，也说明支付、身份与授权环节仍是 agent 落地的真实门槛。",
+      "category": "产品",
+      "rank": 14
+    },
+    "c18a5e12e746": {
+      "title_zh": "Harbor 新增 Docker Sandboxes 支持，可在隔离 MicroVM 中运行可复现的 agent 评估",
+      "summary": "Harbor 新增对 Docker Sandboxes 的支持，可在隔离的 MicroVM 里运行可重现的 AI agent 评估。agent 评测最怕环境不一致和副作用外溢，隔离与可复现直接决定结论能不能被别人复算。",
+      "category": "研究",
+      "rank": 15
+    }
+  }
+}
