@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-06",
+  "generated_by": "ai",
+  "items": {
+    "8e75ec02fc50": {
+      "title_zh": "Perplexity 推出面向办公场景的 AI 智能体 Teammates",
+      "summary": "Perplexity 发布名为 Teammates 的常驻型 AI 智能体，可在同一工作场景里承担多个角色，直接对标 OpenAI 与 Anthropic 的办公智能体。办公智能体是当前几家头部厂商争夺的主战场，搜索起家的 Perplexity 由此把重心从一次性问答转向后台持续执行任务。",
+      "category": "产品",
+      "rank": 1
+    },
+    "b529285c262b": {
+      "title_zh": "OpenAI 发布安全专用模型 GPT-6 Cyber",
+      "summary": "OpenAI 推出安全专用模型 GPT-6 Cyber，称其在发现漏洞上更强，也更不容易在测试中越界攻击其他公司。安全专用模型正成为外界衡量实验室防护能力的公开标尺，也回应了各方对 AI 被用于网络攻击的担忧。",
+      "category": "模型",
+      "rank": 2
+    },
+    "bf7e9a38adde": {
+      "title_zh": "OpenAI 总裁 Greg Brockman：公司可能在 2027 年具备 IPO 条件",
+      "summary": "Greg Brockman 在《华尔街日报》科技会议上表示，OpenAI 可能在 2027 年做好上市准备，并称公司在企业市场持续取得进展。若成真，这将是头部 AI 实验室首次进入公开资本市场，其估值与财务披露会成为整个行业的参照。",
+      "category": "资本",
+      "rank": 3
+    },
+    "a29b2895a2f3": {
+      "title_zh": "百度开源文心 5.5 Flash Base 基座模型",
+      "summary": "11 月 5 日，百度正式开源最新基座模型文心 5.5 Flash Base，称其在多项基准测试中刷新同尺寸模型的最好成绩。开源基座可以直接下载微调，对需要本地部署或二次训练的团队来说多了一个可选底座。",
+      "category": "模型",
+      "rank": 4
+    },
+    "01af2f668ade": {
+      "title_zh": "Airbnb 计划 2027 年上半年推出 AI 旅行助手",
+      "summary": "Airbnb 表示将在 2027 年上半年上线 AI 旅行助手，覆盖行程规划、选项比较、订单管理与入住期间的协助。让智能体嵌进交易闭环而不只做推荐，是旅游类产品落地 AI 的关键一步，也会改变平台内部的流量分配方式。",
+      "category": "产品",
+      "rank": 5
+    },
+    "912fb8894a64": {
+      "title_zh": "谷歌与 Meta 在 PyTorch 大会开源 TorchTPU",
+      "summary": "在 2026 年 PyTorch 大会上，谷歌与 Meta 开源 TorchTPU，为 PyTorch 提供在 TPU 上的原生支持。开源后 PyTorch 可在 TPU 上原生运行，使用这套技术栈的团队因此在 Nvidia GPU 之外多了一种可直接对接的算力选择。",
+      "category": "硬件",
+      "rank": 6
+    },
+    "b0e121b3a461": {
+      "title_zh": "Claude 上线 Personal Finance，可通过 Plaid 连接银行账户",
+      "summary": "Anthropic 为 Claude 增加 Personal Finance 功能，用户经 Plaid 连接银行与信用卡账户后，可直接向 Claude 询问自己的收支情况。模型接入真实账户数据意味着 AI 助手开始承担记账与财务分析，也把账户授权的安全边界推到了台面上。",
+      "category": "产品",
+      "rank": 7
+    },
+    "825a50d1c0ad": {
+      "title_zh": "DeepMind 发布 Gemini Omni 1.2 Flash",
+      "summary": "DeepMind 推出 Gemini Omni 1.2 Flash，主打更快、成本更低，并支持更长的片段。生成时长与单次成本一直是视频类模型实际使用的瓶颈，Flash 档位下探会直接改变批量生成场景的成本结构。",
+      "category": "模型",
+      "rank": 8
+    },
+    "9d6202c03434": {
+      "title_zh": "Meta 在美国上线 Muse 视频通话，可用定制动画形象对话",
+      "summary": "Meta 宣布美国用户可以用可自定义的动画形象与 Muse 智能体进行视频通话，该形象还能代替用户接听电话。这是把 AI 助手做成常驻人格化形象的一步，也为配套的 Tamagotchi 式随身硬件做了铺垫。",
+      "category": "产品",
+      "rank": 9
+    },
+    "d2b795f57656": {
+      "title_zh": "谷歌启动全球自愿离职计划，同期 AI 投入达 2000 亿美元",
+      "summary": "有报道称谷歌在全球范围启动「自愿买断」离职计划，最高补偿 12 个月工资，同期公司在 AI 上的投入规模达到 2000 亿美元。巨额算力开支与人员优化同时出现，反映大厂正在把资源从人力向基础设施转移。",
+      "category": "资本",
+      "rank": 10
+    },
+    "6dad7a604d39": {
+      "title_zh": "Dropbox 以 3.5 亿美元收购 Tigris Data",
+      "summary": "Dropbox 宣布以 3.5 亿美元收购存储服务商 Tigris Data，该交易将用于支持面向 AI 开发者的新存储平台 DBX Agent Cloud。存储层正成为智能体基础设施的竞争点，这笔收购说明老牌云盘公司选择用买的方式补齐 AI 基础设施。",
+      "category": "资本",
+      "rank": 11
+    },
+    "956cb223c580": {
+      "title_zh": "Agility 登陆纳斯达克，成为首家纯人形机器人上市公司",
+      "summary": "Agility 在纳斯达克挂牌，成为第一家以人形机器人为主业的上市公司。人形机器人长期停留在演示阶段，公开市场的定价与财报披露会给出一条可追踪的商业化检验口径。",
+      "category": "资本",
+      "rank": 12
+    },
+    "3b58ffb304e7": {
+      "title_zh": "Claude Code 被指会把用户邮箱地址发送给所访问的网站",
+      "summary": "Anthropic 的 claude-code 仓库里有一个 issue 指出，Claude Code 在访问网站时会把用户的邮箱地址一并发送出去，该讨论在 Hacker News 上获得近 700 点关注。编码智能体会代替用户请求大量外部页面，这类默认携带的标识信息带来隐私与追踪风险。",
+      "category": "产品",
+      "rank": 13
+    },
+    "95c5f7844825": {
+      "title_zh": "谷歌发布 ML Drift，加速各类 GPU 上的端侧 AI 推理",
+      "summary": "谷歌发布 ML Drift，用于在多种 GPU 上加速端侧 AI 推理。端侧推理长期受限于不同 GPU 的适配成本，能在多类硬件上通用，会降低把模型放到手机与 PC 本地运行的门槛。",
+      "category": "硬件",
+      "rank": 14
+    },
+    "29e598ea6d67": {
+      "title_zh": "开源自进化研发平台 LoopForge：把 Coding Agent 接进研发团队",
+      "summary": "有团队在 InfoQ 撰文介绍他们打造并开源的研发平台 LoopForge，目标是让 Coding Agent 进入研发团队后能够自我演进。对打算把编码智能体接入真实工程流程的团队，这是一个可以直接查看实现的开源参考。",
+      "category": "研究",
+      "rank": 15
+    }
+  }
+}
