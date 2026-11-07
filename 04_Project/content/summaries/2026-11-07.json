@@ -1,0 +1,96 @@
+{
+    "date": "2026-11-07",
+    "generated_by": "ai",
+    "items": {
+        "314bd089789a": {
+            "title_zh": "OpenAI 据报以 1.25 万亿美元估值再募 110 亿美元",
+            "summary": "据 TechCrunch 报道，OpenAI 在一轮尚未关闭的融资中又募得 110 亿美元，公司估值达到 1.25 万亿美元，该轮预计在未来几周内完成。这是这一轮 AI 投资热潮中规模最大的私募融资之一，也让未上市 AI 公司的估值锚继续停在高位。",
+            "category": "资本",
+            "rank": 1
+        },
+        "275687e80fc7": {
+            "title_zh": "腾讯 Hy4 调用量激增，WorkBuddy 完成十倍扩容",
+            "summary": "11 月 5 日，腾讯宣布因 Hy4 模型调用量激增，WorkBuddy 已完成十倍扩容，量子位称其 Agent 能力在开源模型中排名第一。模型侧的调用需求正直接传导到后端资源与产品容量，扩容节奏成了衡量一个模型真实使用量的硬指标。",
+            "category": "模型",
+            "rank": 2
+        },
+        "8f7798ef97e4": {
+            "title_zh": "OpenAI 发布新的网络安全模型，能力仍待检验",
+            "summary": "OpenAI 推出面向网络安全的新模型，发布时点恰逢各家 AI 实验室在关键基础设施防护上受到更多审视。TechCrunch 提出的问题是：要让防守方追上攻击方，一个专用模型是否足够。",
+            "category": "模型",
+            "rank": 3
+        },
+        "28c2d038c17b": {
+            "title_zh": "Bloomberg：Anthropic IPO 买方估值预期低至 1.1 万亿美元",
+            "summary": "据 Bloomberg 报道（经 Hacker News 转引），Anthropic IPO 的潜在买方给出的估值最低看到 1.1 万亿美元，定价预期在 AI 板块回调后承压。这轮 IPO 的最终定价，会成为一级市场给头部 AI 公司重新定锚的第一个公开样本。",
+            "category": "资本",
+            "rank": 4
+        },
+        "d275be2a1267": {
+            "title_zh": "Ramp 数据：Anthropic 临近 IPO，企业 AI 支出却已停滞",
+            "summary": "支付平台 Ramp 的数据显示，AI 使用量仍在上升，但相关支出已经停滞，主要买家正在压价并加强成本控制。使用量与支出首次背离，会直接削弱投资者对企业 AI 市场增速的假设，而这一假设正是当前估值的支点。",
+            "category": "资本",
+            "rank": 5
+        },
+        "cab49616e524": {
+            "title_zh": "DeepSeek 带火稀疏计算，一家国产芯片公司再融近 10 亿元",
+            "summary": "量子位报道，稀疏计算因 DeepSeek 受到更多关注，国产芯片公司正加速突围，其中一家又完成近 10 亿元融资，第三季度营收实现数倍增长。稀疏计算是降低推理成本的主要方向之一，融资与营收同步起量，说明这条路线已经跑出可落地的商业进展。",
+            "category": "硬件",
+            "rank": 6
+        },
+        "fbf575ba8ccd": {
+            "title_zh": "Underdog 展示 32MB 语音模型，可同时生成语音与音乐",
+            "summary": "Underdog 在新演示中展示了一个只有 32MB 的语音模型，体积很小，但能同时生成语音和音乐。把生成能力压到这种体积，意味着端侧与离线场景开始具备可用的音频生成选项。",
+            "category": "模型",
+            "rank": 7
+        },
+        "46e88a02e034": {
+            "title_zh": "Meta 推出 Spaces，为 Muse 智能体提供新的协作方式",
+            "summary": "Meta 为 Muse 智能体上线 Spaces 功能，提供一种与 AI 助手协作的新形式，Muse 近期已连续加入多项新能力与集成。智能体产品正从一次性对话转向可长期驻留、可多人共用的工作空间，Spaces 是这一方向上的又一次试探。",
+            "category": "产品",
+            "rank": 8
+        },
+        "bca6d6c54a1f": {
+            "title_zh": "Cloudflare 与 VoidZero 推出 tsrs：AI 生成的 TypeScript 编译器 Rust 移植版",
+            "summary": "Cloudflare 与 VoidZero 联合推出 tsrs，它是由 AI 生成、把 TypeScript 编译器移植到 Rust 的版本。这不只是又一个重写项目，它把 AI 能否承担大型编译器级代码迁移这个问题，摆到了可验证的位置上。",
+            "category": "研究",
+            "rank": 9
+        },
+        "9889510bec40": {
+            "title_zh": "Palo Alto Networks 洽购 AI 智能体安全公司 Clutch，作价约 5 亿美元",
+            "summary": "Palo Alto Networks 正洽谈以 5 亿美元收购 AI 智能体安全初创公司 Clutch，后者由 Lightspeed 与 SignalFire 投资，上一轮估值 8500 万美元。智能体开始接管企业内的实际权限，其行为安全正被并入传统网络安全产品线。",
+            "category": "资本",
+            "rank": 10
+        },
+        "9916aee4f641": {
+            "title_zh": "中国团队以 99.4% 刷新 CyberGym 赛事纪录",
+            "summary": "量子位报道，一个中国 AI 团队以 99.4% 的成绩登顶 CyberGym 赛事，刷新该项比赛的世界纪录。安全攻防类基准是检验模型真实能力的少数硬指标之一，这类成绩比通用榜单更能反映模型在漏洞发现上的实际水平。",
+            "category": "研究",
+            "rank": 11
+        },
+        "36231604b288": {
+            "title_zh": "Crusoe 将进展不顺的怀俄明数据中心项目出售给 Google",
+            "summary": "Crusoe 把怀俄明州一个进展不顺的数据中心项目卖给了 Google。这笔交易暴露出超大规模 AI 数据中心在选址、供电与施工上的现实难度，也说明二线开发商的项目正在向 hyperscaler 集中。",
+            "category": "硬件",
+            "rank": 12
+        },
+        "6dad7a604d39": {
+            "title_zh": "Dropbox 以 3.5 亿美元收购 Tigris Data，补强 AI 基础设施",
+            "summary": "Dropbox 以 3.5 亿美元收购 Tigris Data，交易将支持其为开发 AI 模型与智能体的开发者搭建新存储平台 DBX Agent Cloud。存储层正在为智能体负载重新设计，老牌工具厂商选择用收购而非自研来补这块能力。",
+            "category": "资本",
+            "rank": 13
+        },
+        "35ab47bbc76c": {
+            "title_zh": "Amazon 允许用户发短信向 Alexa 下单",
+            "summary": "Amazon 为 Alexa for Shopping 加入新功能，用户可以直接发短信描述想买的商品，向这个 AI 购物助手完成下单。把购物入口从 App 挪到短信，Amazon 想抢的是用户不在购物场景里时的那部分需求。",
+            "category": "产品",
+            "rank": 14
+        },
+        "9213c0a69293": {
+            "title_zh": "Claude Code 产品负责人 Cut Wu 宣布加入 OpenAI",
+            "summary": "据 InfoQ 报道，Claude Code 产品负责人 Cut Wu 宣布加入 OpenAI。编码智能体正是两家公司正面竞争的战场，核心产品负责人的流向，往往会提前预示下一阶段的产品重心。",
+            "category": "产品",
+            "rank": 15
+        }
+    }
+}
