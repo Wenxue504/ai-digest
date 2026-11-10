@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-10",
+  "generated_by": "ai",
+  "items": {
+    "98071e4b97d9": {
+      "title_zh": "Anthropic 传推进 IPO，本周将确定估值区间",
+      "summary": "据《华尔街日报》报道，Anthropic 计划推进 IPO，本周内会确定估值区间。头部模型公司从私募融资转向公开市场，其估值要开始接受二级市场检验，也会给整个行业的资本定价提供参照。",
+      "category": "资本",
+      "rank": 1
+    },
+    "f1eea0a2781a": {
+      "title_zh": "Anthropic 发布 Claude Fable 5.2 与 Claude Mythos 5.2",
+      "summary": "Anthropic 同日发布 Claude Fable 5.2 与 Claude Mythos 5.2 两款模型，官方称其面向「棘手」的技术任务设计。把定位压在复杂技术场景上，说明这次更新的卖点不在日常对话，而在编码、推理一类硬任务。",
+      "category": "模型",
+      "rank": 2
+    },
+    "ea1cff75717b": {
+      "title_zh": "Anthropic 买入 34 亿美元天然气轮机",
+      "summary": "Anthropic 以 34 亿美元购入一批天然气轮机，加入 AI 公司自建发电能力的行列。算力扩张已经把电力变成瓶颈，模型公司直接介入能源采购，意味着供电合同正在成为和芯片同等重要的竞争资源。",
+      "category": "硬件",
+      "rank": 3
+    },
+    "fe9001b06ea6": {
+      "title_zh": "Meta 发布轻量模型 Muse Ember，面向 Agent 执行",
+      "summary": "Meta 发布轻量模型 Muse Ember，输入价格 10 美分/百万 token，明显低于 Haiku、Luna 等前沿竞品。Agent 任务要反复调用模型，单价直接决定它能不能大规模跑起来，低价小模型因此成了落地的关键一环。",
+      "category": "模型",
+      "rank": 4
+    },
+    "0d9e3f677bbd": {
+      "title_zh": "AI 接管一家 8 万 Star 开源项目：写代码、派任务、查 Bug 全包",
+      "summary": "量子位报道，一个 8 万 Star 的开源项目把写代码、派任务、查 Bug 整体交给 AI，主管 Agent 在 Worker 不够时还能自行招募。这是把 Agent 编排推到「团队自治」的一次真实样本，人类的角色也从执行者变成审核者。",
+      "category": "研究",
+      "rank": 5
+    },
+    "9f03cf341cd9": {
+      "title_zh": "千问办公 2.0 发布，支持多人与 Agent 协作的 Team Agent",
+      "summary": "11 月 9 日，千问办公发布 2.0 版本，主打支持多人与 Agent 共同协作的 Team Agent。办公场景从「一个人问 AI」变成「一群人加若干 Agent 分工」，协作编排与权限管理会成为这类产品的新门槛。",
+      "category": "产品",
+      "rank": 6
+    },
+    "176960f04c63": {
+      "title_zh": "基元律动发布 Agent 原生模型 NeoHorse-1.5-Flash Preview",
+      "summary": "11 月 5 日，基元律动（TokenRhythm）发布 Agent 原生模型 NeoHorse-1.5-Flash Preview，其 RSI 已进入第二轮迭代。专为 Agent 流程训练的模型开始出现迭代节奏，「原生 Agent 模型」这条路正在被更多团队验证。",
+      "category": "模型",
+      "rank": 7
+    },
+    "d51ea73e96c2": {
+      "title_zh": "腾讯混元开源 Hy4，多模态 Agent 能力受关注",
+      "summary": "腾讯混元发布并开源 Hy4 模型，量子位实测称其搭配 WorkBuddy 时多模态 Agent 的交付表现突出。开源阵营再添一个可自部署的多模态底座，需要在本地或私有环境跑 Agent 的团队又多了一个选项。",
+      "category": "模型",
+      "rank": 8
+    },
+    "d38ba6f8d531": {
+      "title_zh": "Google 发布 TPU 8tx 与 TPU 8i Max",
+      "summary": "Google 在云基础设施博客上公布 TPU 8tx 与 TPU 8i Max 两款新硬件。自研芯片是 Google 控制 AI 算力成本的主要抓手，新代际的规格会直接影响其云上模型的供给与定价空间。",
+      "category": "硬件",
+      "rank": 9
+    },
+    "fea55cef6041": {
+      "title_zh": "Google Gemini 将个人 Drive 文件与邮件交给人工标注员",
+      "summary": "有开发者公开的材料显示，Google Gemini 会把用户个人的 Drive 文件与邮件内容送去人工标注。企业采购 AI 时最在意的数据边界再次被摆上台面，这类披露会直接影响 Gemini 在敏感行业的可用性。",
+      "category": "产品",
+      "rank": 10
+    },
+    "d669f742f45b": {
+      "title_zh": "Anthropic 重做源代码管理系统：提交量增长 12 倍，传统架构失效",
+      "summary": "Anthropic 重构了内部源代码管理系统，以应对提交量增长 12 倍带来的压力，原有架构已开始失效。AI 生成代码大幅抬高了仓库的写入频率，传统 Git 托管方案能否撑住，正在成为工程团队的新问题。",
+      "category": "研究",
+      "rank": 11
+    },
+    "4a7141713ab5": {
+      "title_zh": "Apple 推出 50 美元的 Intelligence Usage Packs",
+      "summary": "Apple 上线 50 美元的 Intelligence Usage Packs，用来扩展部分 AI 功能的可用额度，Logic Pro 已同步更新。把 AI 能力按额度包售卖，意味着 Apple Intelligence 正在从免费试用走向分层收费。",
+      "category": "产品",
+      "rank": 12
+    },
+    "86961a9937fd": {
+      "title_zh": "Disney 与 Adobe 合作开发生成式 AI 工具",
+      "summary": "迪士尼与 Adobe 达成多年合作，共同开发「以艺术家为主导」的自有生成式 AI 模型，用于支撑其制作流程。版权归属与风格一致性是影视公司用 AI 的最大顾虑，自建模型是绕开争议的一条路径。",
+      "category": "产品",
+      "rank": 13
+    },
+    "95c3c02be004": {
+      "title_zh": "Automattic 推出 vibe-coding 应用部署平台 Spacefast",
+      "summary": "Automattic 发布 Spacefast，用于部署由 vibe-coding 生成的应用，对标 Lovable 等产品。写代码的门槛降下来之后，部署与托管成了新的卡点，WordPress 母公司切入这一环，是在抢 AI 应用的分发入口。",
+      "category": "产品",
+      "rank": 14
+    },
+    "9d5aee5d27ee": {
+      "title_zh": "Instagram 推出 Effect Builder，用提示词生成滤镜",
+      "summary": "Instagram 上线 Effect Builder，用户可以用 AI 提示词为自己的 Stories 生成自定义滤镜。把创作工具塞进社交产品是平台留住创作者的常用做法，滤镜也从手工制作变成一句话生成。",
+      "category": "产品",
+      "rank": 15
+    }
+  }
+}
