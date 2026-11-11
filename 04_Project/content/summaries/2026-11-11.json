@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-11",
+  "generated_by": "ai",
+  "items": {
+    "6f3953006a30": {
+      "title_zh": "Anthropic 设定 IPO 发行价区间 70–78 美元，隐含估值 1.404 万亿美元",
+      "summary": "Anthropic 把 IPO 发行价区间定在每股 70 至 78 美元，按完全稀释口径、以区间上限计算，公司估值将达到 1.404 万亿美元。这是前沿模型公司第一次把估值交给公开市场定价，发行结果会直接成为整条 AI 赛道的一把尺子。",
+      "category": "资本",
+      "rank": 1
+    },
+    "a14681e2ddce": {
+      "title_zh": "Google 公开发布 Gemini 4 Carbon，新增 agent「swarm」能力",
+      "summary": "Google 将最新模型 Gemini 4 Carbon 向公众开放，两周前它只提供给少数「网络安全防御者」试用，此次同时带来 agent 集群协作的 swarm 功能。从限定群体到全面开放只隔两周，多 agent 协同正在成为各家下一代模型的标配能力。",
+      "category": "模型",
+      "rank": 2
+    },
+    "91faed0650f0": {
+      "title_zh": "纽约州 AI 安全法生效，OpenAI 与 Anthropic 面临新监管",
+      "summary": "纽约州开始执行其覆盖面较广的 AI 安全法，要求 OpenAI、Anthropic 等主要模型开发商登记、披露安全实践并提交相关报告。登记加披露的组合把合规成本直接压到模型厂商身上，州层面的监管由此有了一个可被其他州参照的样本。",
+      "category": "政策",
+      "rank": 3
+    },
+    "9a5bae24e02d": {
+      "title_zh": "Anthropic 七位联合创始人将在 IPO 中各自套现约 2.5 亿美元",
+      "summary": "Anthropic 的七位联合创始人计划在 IPO 中卖出完全相同数量的股份，按发行价区间中值计算，每人约套现 2.5 亿美元。创始人集体在同一时点大额减持，是观察这轮 AI 估值能否被公开市场接住的一个直接参照点。",
+      "category": "资本",
+      "rank": 4
+    },
+    "fd8e1c638d2d": {
+      "title_zh": "Anthropic 推出 Claude Meetings，把会议讨论转成计划与任务",
+      "summary": "Claude Meetings 会在参会者交谈时起草正在讨论的计划、在白板上排出时间线、在会议聊天里回答问题，并可访问已连接的数据源。办公协作类 AI 的产出从「会后总结」前移到「会中生成」，交付物直接变成可执行的任务与时间表。",
+      "category": "产品",
+      "rank": 5
+    },
+    "5ef445c1e85d": {
+      "title_zh": "Google 补强 AI 硬件，推出两款专用 TPU",
+      "summary": "Google 发布两款新的张量处理单元，把 TPU 产品线扩展到机密模型训练与更大内存容量等场景。训练侧对机密性与显存的要求正把通用加速器拆成更细的专用型号，自研芯片在大厂算力布局中的权重继续上升。",
+      "category": "硬件",
+      "rank": 6
+    },
+    "428ac4b42c0b": {
+      "title_zh": "DeepMind 推出 AlphaProof Code，用 Lean 证明验证复杂软件",
+      "summary": "AlphaProof Code 的 agent 用 Lean 写出三百万行证明，用于验证 Signal 核心加密实现的正确性。形式化验证从数学题推进到生产级软件，关键基础设施的代码正确性第一次有机会被机器大规模核验。",
+      "category": "研究",
+      "rank": 7
+    },
+    "bd2a6830d8cf": {
+      "title_zh": "OpenAI 收购 Sonder 创始人创办的旅游创业公司 Odessia",
+      "summary": "OpenAI 收购了由 Sonder 创始人 Francis Davidson 创办的旅游创业公司 Odessia，但尚未说明具体打算怎么用。收购一家垂直行业公司而不是自建，说明 OpenAI 在补齐消费场景时更倾向于直接买下成熟团队。",
+      "category": "资本",
+      "rank": 8
+    },
+    "53f3f71c1d16": {
+      "title_zh": "Meta 推出新模型 Muse Ember，成本约为 Claude Haiku 5.5 的三分之一",
+      "summary": "Meta 发布新模型 Muse Ember，以成本为核心卖点，直接对标 Anthropic 的 Claude Haiku 5.5。轻量级模型的价格竞争继续下探，对需要大批量调用的应用方来说，可选的低成本模型又多了一个。",
+      "category": "模型",
+      "rank": 9
+    },
+    "3872694bbd4e": {
+      "title_zh": "蚂蚁灵波开源触觉基础模型 LingBot-Touch",
+      "summary": "蚂蚁灵波科技于 11 月 10 日开源触觉基础模型 LingBot-Touch，把触觉信号做成可 token 化的通用表示。触觉是具身智能里数据最难获取的模态，开源基础模型能降低机器人在抓取与操作任务上的复现门槛。",
+      "category": "研究",
+      "rank": 10
+    },
+    "a98763b80c84": {
+      "title_zh": "DeepMind 发布 Gemini Robotics 2.5，提升真实环境下的通用灵巧性",
+      "summary": "Gemini Robotics 2.5 是 DeepMind 目前能力最强的视觉-语言-动作模型，官方称其在机器人灵巧性、可靠性与安全性上均有提升。VLA 模型的迭代速度决定通用机器人从演示走向稳定作业的进度，这一版把重心放在真实世界的操作可靠性上。",
+      "category": "模型",
+      "rank": 11
+    },
+    "7396b577c725": {
+      "title_zh": "ChatGPT 上线经过验证的「Business Agents」",
+      "summary": "ChatGPT 将允许用户与代表品牌、经过验证的 Business Agents 对话，用于比价购物等任务。把第三方商家的 agent 纳入对话入口，意味着 ChatGPT 正在从回答问题转向承接具体的交易决策。",
+      "category": "产品",
+      "rank": 12
+    },
+    "3e50515c6d1f": {
+      "title_zh": "eBay 疑似封堵第三方 AI agent 访问",
+      "summary": "有读者向 The Verge 反映，eBay 已阻止包括 Meta 的 Muse 在内的 AI agent 浏览其平台。平台方开始对 agent 流量设限，意味着「agent 代为购物」这条路要先过平台准入这一关。",
+      "category": "产品",
+      "rank": 13
+    },
+    "cf628fc18114": {
+      "title_zh": "DeepSeek Harness 日活达 154 万，官方开始向插件作者发放 Token",
+      "summary": "DeepSeek Harness 的日活跃用户达到 154 万，官方开始向插件作者发放 Token 作为激励。用 Token 补贴换取第三方插件供给，是把 Agent 生态的建设成本部分转移给开发者的做法。",
+      "category": "产品",
+      "rank": 14
+    },
+    "fe6d70a1808a": {
+      "title_zh": "Oura 以 6.25 亿美元收购 AI 原生初级医疗公司 Counsel Health",
+      "summary": "Oura 将以 6.25 亿美元收购 AI 原生的初级医疗服务公司 Counsel Health，交易发生在它因「IPO 市场不确定性」无限期推迟 22 亿美元上市之后。硬件厂商用收购补齐医疗服务能力，可穿戴设备的价值正从采集数据转向干预与诊疗。",
+      "category": "资本",
+      "rank": 15
+    }
+  }
+}
