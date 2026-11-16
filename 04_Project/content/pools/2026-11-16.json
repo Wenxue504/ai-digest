@@ -1,0 +1,282 @@
+{
+  "date": "2026-11-16",
+  "generated_at": "2026-11-16T12:15:48.512441+08:00",
+  "dropped": 205,
+  "candidates": [
+    {
+      "id": "77828770ffb5",
+      "title": "Apple launches new app to study how people use AI for health",
+      "source": "TechCrunch",
+      "published": "2026-11-16T09:30:00+08:00",
+      "category_guess": "研究",
+      "excerpt": "Apple's new app for a study will answer everyday medical questions",
+      "no_body": false,
+      "score": 4.4,
+      "url": "https://techcrunch.com/2026/11/15/apple-launches-new-app-to-study-how-people-use-ai-for-health/"
+    },
+    {
+      "id": "fa232e2aaf8a",
+      "title": "Indian chip startup Bharat Semi lands $24M seed round as it eyes global AI sensor market",
+      "source": "TechCrunch",
+      "published": "2026-11-16T07:30:00+08:00",
+      "category_guess": "硬件",
+      "excerpt": "Bharat Semi says it has secured design wins for its AI-enabled sensor technology with companies including General Atomics.",
+      "no_body": false,
+      "score": 3.9,
+      "url": "https://techcrunch.com/2026/11/15/indian-chip-startup-bharat-semi-lands-24m-seed-round-as-it-eyes-global-ai-sensor-market/"
+    },
+    {
+      "id": "2f1f5cbf7ce8",
+      "title": "Jensen Huang might be plotting a return and more of the latest Nvidia drama",
+      "source": "The Verge",
+      "published": "2026-11-16T12:11:51+08:00",
+      "category_guess": "硬件",
+      "excerpt": "The drama around Nvidia co-founder and former CEO Jensen Huang is evolving quickly. The latest edition of our Stepback newsletter should get you up to speed, bu",
+      "no_body": false,
+      "score": 3.8,
+      "url": "https://www.theverge.com/tech/1033999/jensen-huang-return-nvidia-megaspeed"
+    },
+    {
+      "id": "7134e7e1ad67",
+      "title": "The AI graveyard: a running list of projects and startups that didn’t make it",
+      "source": "TechCrunch",
+      "published": "2026-11-15T01:30:00+08:00",
+      "category_guess": "产品",
+      "excerpt": "From Apple's repeatedly delayed Siri AI to OpenAI's messy \"super app\" launch, here's a look at the AI projects that shut down or missed expectations.",
+      "no_body": false,
+      "score": 3.6,
+      "url": "https://techcrunch.com/2026/11/14/the-ai-graveyard-a-running-list-of-projects-and-startups-that-didnt-make-it/"
+    },
+    {
+      "id": "7bcbcfb1111a",
+      "title": "What's Next for Nvidia?",
+      "source": "Hacker News",
+      "published": "2026-11-16T07:55:55+08:00",
+      "category_guess": "硬件",
+      "excerpt": "Article URL: https://steveblank.com/2026/11/15/whats-next-for-nvidia/ Comments URL: https://news.ycombinator.com/item?id=50512235 Points: 122 # Comments: 135",
+      "no_body": false,
+      "score": 3.55,
+      "url": "https://steveblank.com/2026/11/15/whats-next-for-nvidia/"
+    },
+    {
+      "id": "c481d3ae1bc1",
+      "title": "「史上最严」湿实验预测基准发布！推理拉满、算力翻5倍也白搭",
+      "source": "量子位",
+      "published": "2026-11-14T17:58:22+08:00",
+      "category_guess": "硬件",
+      "excerpt": "斯坦福、哈佛、康奈尔……十余家顶尖团队齐坐一桌了",
+      "no_body": false,
+      "score": 3.5,
+      "url": "https://www.qbitai.com/2026/11/510232.html"
+    },
+    {
+      "id": "9d99ea714afd",
+      "title": "Super Agent 进群：今年11.11，多了个会主动干活的“数字人队长”",
+      "source": "InfoQ 中文",
+      "published": "2026-11-16T12:15:48.512441+08:00",
+      "category_guess": "产品",
+      "excerpt": "",
+      "no_body": true,
+      "score": 3.4,
+      "url": "https://www.infoq.cn/article/myl5Mcw3iyCYv3ZJ3hwQ?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "9e3d554c6cb5",
+      "title": "Is bad news for Jensen Huang also bad news for the AI industry?",
+      "source": "TechCrunch",
+      "published": "2026-11-16T05:56:35+08:00",
+      "category_guess": "硬件",
+      "excerpt": "\"Jensen is Nvidia, right? And so much of this economy is riding on Nvidia.\"",
+      "no_body": false,
+      "score": 3.4,
+      "url": "https://techcrunch.com/2026/11/15/is-bad-news-for-jensen-huang-also-bad-news-for-the-ai-industry/"
+    },
+    {
+      "id": "1207b5c1c70b",
+      "title": "Congress wants to tighten export rules on AI chips after Nvidia spy scandal",
+      "source": "The Verge",
+      "published": "2026-11-16T03:15:43+08:00",
+      "category_guess": "硬件",
+      "excerpt": "Unsurprisingly, following the scandal involving now-former Nvidia CEO Jensen Huang and a suspected Chinese spy, Congress is looking to further restrict exports ",
+      "no_body": false,
+      "score": 3.3,
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1033984/congress-export-rules-ai-chips-china"
+    },
+    {
+      "id": "b034a4a23692",
+      "title": "GitLab 19.5 发布，将智能体开发纳入可治理的 DevOps 平台能力",
+      "source": "InfoQ 中文",
+      "published": "2026-11-15T17:00:00+08:00",
+      "category_guess": "模型",
+      "excerpt": "",
+      "no_body": true,
+      "score": 3.1,
+      "url": "https://www.infoq.cn/article/0IpE2EOypcqMFtL7z4z1?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "f7214e14d1e1",
+      "title": "Apple’s new study looks to improve the effectiveness of AI health tools",
+      "source": "The Verge",
+      "published": "2026-11-16T09:47:16+08:00",
+      "category_guess": "研究",
+      "excerpt": "Apple announced a new study today with the goal of better understanding how people interact with conversational AI health tools and how useful their responses a",
+      "no_body": false,
+      "score": 2.8,
+      "url": "https://www.theverge.com/tech/1033355/apples-new-study-looks-to-improve-the-effectiveness-of-ai-health-tools"
+    },
+    {
+      "id": "460d540b96d7",
+      "title": "AI 硬件能玩出多少新花样？这场黑客松正在寻找 20 支开发者团队",
+      "source": "InfoQ 中文",
+      "published": "2026-11-16T12:15:48.512441+08:00",
+      "category_guess": "产品",
+      "excerpt": "",
+      "no_body": true,
+      "score": 2.6,
+      "url": "https://www.infoq.cn/article/ExwZoqvAjY423YKaXcpw?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "d9bb72c7b4b4",
+      "title": "SNL gathers all the tech tycoons for a lesson in dating and spycraft",
+      "source": "TechCrunch",
+      "published": "2026-11-16T04:20:57+08:00",
+      "category_guess": "产品",
+      "excerpt": "While awkward, creepy tech executives have become a recurring theme on Saturday Night Live, this week’s episode gave the cast a chance to show off all their imp",
+      "no_body": false,
+      "score": 2.4,
+      "url": "https://techcrunch.com/2026/11/15/snl-gathers-all-the-tech-tycoons-for-a-lesson-in-dating-and-spycraft/"
+    },
+    {
+      "id": "acaf00569e86",
+      "title": "Where was Nvidia’s security team?",
+      "source": "TechCrunch",
+      "published": "2026-11-15T08:08:07+08:00",
+      "category_guess": "硬件",
+      "excerpt": "Nvidia’s security chief quietly left in August, and now that CEO Jensen Huang has stepped down over his relationships, including one with an executive at a comp",
+      "no_body": false,
+      "score": 1.9,
+      "url": "https://techcrunch.com/2026/11/14/where-was-nvidias-security-team/"
+    },
+    {
+      "id": "a4a92fbcda03",
+      "title": "Elon Musk, other tech execs sign petition calling on Nvidia to reinstate Jensen Huang",
+      "source": "TechCrunch",
+      "published": "2026-11-15T05:41:22+08:00",
+      "category_guess": "硬件",
+      "excerpt": "The petition had attracted more than 115,000 signatures as of Saturday afternoon.",
+      "no_body": false,
+      "score": 1.9,
+      "url": "https://techcrunch.com/2026/11/14/elon-musk-other-tech-execs-sign-petition-calling-on-nvidia-to-reinstate-jensen-huang/"
+    },
+    {
+      "id": "075bbfb634c2",
+      "title": "Asian governments react to Nvidia CEO Jensen Huang’s exit",
+      "source": "TechCrunch",
+      "published": "2026-11-15T00:34:15+08:00",
+      "category_guess": "硬件",
+      "excerpt": "Some governments moved to confirm chip supply commitments, while others are monitoring the impact on local projects or addressing ongoing investigations.",
+      "no_body": false,
+      "score": 1.9,
+      "url": "https://techcrunch.com/2026/11/14/asian-governments-react-to-nvidia-ceo-jensen-huangs-exit/"
+    },
+    {
+      "id": "4c525e5e54fa",
+      "title": "An overview of Jensen Huang’s messy days",
+      "source": "The Verge",
+      "published": "2026-11-15T08:09:10+08:00",
+      "category_guess": "硬件",
+      "excerpt": "This is The Stepback, a weekly newsletter breaking down one essential story from the tech world. For more on Jensen Huang's resignation and the fallout from Nvi",
+      "no_body": false,
+      "score": 1.8,
+      "url": "https://www.theverge.com/column/1033943/jensen-huang-nvidia-china-spying-scandal-resignation"
+    },
+    {
+      "id": "567fa298898a",
+      "title": "Jensen Huang and the decline of the visionary showman founder CEO",
+      "source": "The Verge",
+      "published": "2026-11-14T23:12:19+08:00",
+      "category_guess": "硬件",
+      "excerpt": "On January 6th, 2025, Nvidia CEO Jensen Huang got his rockstar moment at last. He strode triumphantly onstage, hand raised in the air, to the claps and cheers o",
+      "no_body": false,
+      "score": 1.8,
+      "url": "https://www.theverge.com/tech/1033781/nvidia-jensen-huang-last-visionary-showman-founder-ceo"
+    },
+    {
+      "id": "bbb553bb0da6",
+      "title": "Yelp AI 助手融合原生 UI 与服务端驱动 UI",
+      "source": "InfoQ 中文",
+      "published": "2026-11-15T23:00:00+08:00",
+      "category_guess": "产品",
+      "excerpt": "",
+      "no_body": true,
+      "score": 1.6,
+      "url": "https://www.infoq.cn/article/1N801doFOEl2Swqey5Jy?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "823c02acf5ba",
+      "title": "闭环 AI 自我进化：从 Skill、Harness 到模型训练与评估｜AICon北京",
+      "source": "InfoQ 中文",
+      "published": "2026-11-15T18:00:00+08:00",
+      "category_guess": "模型",
+      "excerpt": "",
+      "no_body": true,
+      "score": 1.6,
+      "url": "https://www.infoq.cn/article/fZSEkDatL9xajG8PVi7G?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "7f58f945a6e1",
+      "title": "绿电进Token出！联想重新定义词元工厂",
+      "source": "量子位",
+      "published": "2026-11-14T17:41:02+08:00",
+      "category_guess": "产品",
+      "excerpt": "年产2000万亿Token，成本狂降70%",
+      "no_body": false,
+      "score": 1.0,
+      "url": "https://www.qbitai.com/2026/11/510094.html"
+    },
+    {
+      "id": "efacb5cf9839",
+      "title": "AI 自动写 PR，模型反而最简单：Inkitt 如何应对 Webhook 重复、CI 失败与合并冲突",
+      "source": "InfoQ 中文",
+      "published": "2026-11-14T18:00:00+08:00",
+      "category_guess": "模型",
+      "excerpt": "",
+      "no_body": true,
+      "score": 0.6,
+      "url": "https://www.infoq.cn/article/YRXscVHsTh0g6CVCJJ0D?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "7f1b96772a66",
+      "title": "从提效到扩能：AI 驱动小团队的能力突破与组织演进｜AICon北京",
+      "source": "InfoQ 中文",
+      "published": "2026-11-14T18:00:00+08:00",
+      "category_guess": "产品",
+      "excerpt": "",
+      "no_body": true,
+      "score": 0.6,
+      "url": "https://www.infoq.cn/article/eTz8pt2LoALMvzvxj4aa?utm_source=rss&utm_medium=article"
+    },
+    {
+      "id": "071bc9829f35",
+      "title": "英伟达上演“奥特曼2.0”，员工集体请愿：让老黄回家！",
+      "source": "量子位",
+      "published": "2026-11-14T18:08:08+08:00",
+      "category_guess": "硬件",
+      "excerpt": "马斯克也签名了",
+      "no_body": false,
+      "score": 0.0,
+      "url": "https://www.qbitai.com/2026/11/510297.html"
+    },
+    {
+      "id": "de8729406051",
+      "title": "程序员集体沉迷折纸飞机！最长滞空31.2秒",
+      "source": "量子位",
+      "published": "2026-11-14T17:48:34+08:00",
+      "category_guess": "产品",
+      "excerpt": "童年的纸飞机，现在终于飞回我手里～",
+      "no_body": false,
+      "score": 0.0,
+      "url": "https://www.qbitai.com/2026/11/510150.html"
+    }
+  ]
+}
