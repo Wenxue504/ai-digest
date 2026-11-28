@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbfaf7">
+<meta name="description" content="每天中午 12:00，AI 行业最新消息，一屏读完。">
+<title>AI 日报</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">
+    <span class="mark">AI</span><span class="word">日报</span>
+  </div>
+  <p class="tagline">每天 12:00，一屏读完</p>
+</header>
+
+<nav class="sessions" id="sessions" aria-label="期次切换"></nav>
+
+<div id="notice"></div>
+
+<main id="app" aria-live="polite">
+  <p class="empty">正在载入…</p>
+</main>
+
+<footer class="foot">
+  <p>内容来自公开 RSS，摘要由 AI 改写，点标题核对原文。</p>
+  <p class="dim" id="built"></p>
+</footer>
+
+<noscript><p class="empty">这个页面需要 JavaScript 才能显示内容。</p></noscript>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
